@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 
 class CompanySetting extends Model
 {
-    protected $fillable = ['name','tagline','address','phone','email','website','logo_path','pimpinan_nama','pimpinan_jabatan','footer_text'];
+    protected $fillable = ['name','tagline','address','phone','email','website','logo_path','pimpinan_nama','pimpinan_jabatan','footer_text','signature_enabled','signature_type','signature_salt'];
 
     public static function current(): self
     {
@@ -18,6 +18,9 @@ class CompanySetting extends Model
             'pimpinan_nama' => 'Datanet',
             'pimpinan_jabatan' => 'Admin Keuangan',
             'footer_text' => 'Slip ini sah sebagai bukti pembayaran gaji. Simpan dengan baik. Dicetak otomatis oleh sistem Datanet.',
+            'signature_enabled' => true,
+            'signature_type' => 'qrcode',
+            'signature_salt' => null,
         ]);
     }
 

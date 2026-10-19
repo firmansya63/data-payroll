@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\ManualNotaController;
+use App\Http\Controllers\SignatureController;
 
 Route::middleware('guest')->group(function(){
     Route::get('/login', [AuthController::class,'showLogin'])->name('login');
@@ -47,4 +48,11 @@ Route::middleware('auth')->group(function(){
     Route::resource("manual-notas", ManualNotaController::class)->parameters(["manual-notas"=>"nota"]);
     Route::get("settings/company", [CompanySettingController::class,"index"])->name("settings.company.index");
     Route::put("settings/company", [CompanySettingController::class,"update"])->name("settings.company.update");
+    
+    // Signature verification routes
+    Route::get("signature/verify", [SignatureController::class,"verify"])->name("signature.verify");
+    Route::get("signature/verify/{hash}", [SignatureController::class,"verify"])->name("signature.verify.hash");
+    Route::post("signature/verify/manual", [SignatureController::class,"verifyManual"])->name("signature.verify.manual");
+    Route::get("signature/barcode/{payroll}", [SignatureController::class,"barcode"])->name("signature.barcode");
+    Route::get("signature/qrcode/{payroll}", [SignatureController::class,"qrcode"])->name("signature.qrcode");
 });

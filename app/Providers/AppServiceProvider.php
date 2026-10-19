@@ -15,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
         // Share data perusahaan ke slip, nota, dan layout (aman jika tabel belum migrate: try/catch)
         View::composer(['payrolls.slip','transactions.nota','transactions.nota-rekap','manual-notas.nota','manual-notas.nota-landscape','layouts.app'], function ($view) {
             try {
-                $view->with('company', CompanySetting::current());
+                $view->with('company', \App\Models\CompanySetting::current());
             } catch (\Throwable $e) {
                 $view->with('company', null);
             }

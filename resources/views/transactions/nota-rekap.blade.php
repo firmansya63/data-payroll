@@ -19,6 +19,7 @@
     <div class="font-bold text-lg tracking-tight text-[#1b2d4a]">{{ strtoupper($company->name ?? 'DATANET') }}</div>
     @if(!empty($company->address))<div class="text-[10px] text-slate-500">{{ $company->address }}</div>@endif
     @if(!empty($company->phone))<div class="text-[10px] text-slate-500">{{ $company->phone }}</div>@endif
+    @if(!empty($company->email))<div class="text-[10px] text-slate-500">{{ $company->email }}</div>@endif
     <div class="text-xs font-semibold mt-2 tracking-wide">REKAP VOUCHER PER RESELLER</div>
   </div>
   <div class="text-xs space-y-1 mb-3">

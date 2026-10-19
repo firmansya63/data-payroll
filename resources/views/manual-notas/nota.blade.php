@@ -15,13 +15,18 @@
   <a href="{{ route('manual-notas.index') }}" class="px-4 py-2.5 border bg-white rounded-xl text-sm">Kembali</a>
 </div>
 <div class="max-w-[720px] mx-auto bg-white p-5 shadow border print:shadow-none print:p-3">
-  <div class="text-center border-b-2 border-slate-800 pb-3 mb-3">
-    <div class="flex justify-center mb-2"><img src="{{ ($company ?? null) ? $company->logoUrl() : asset('logo.png') }}" alt="{{ ($company->name ?? 'Datanet') }}" class="h-10 object-contain"></div>
-    <div class="font-bold text-lg tracking-tight text-[#1b2d4a]">{{ strtoupper($company->name ?? 'DATANET') }}</div>
-    @if(!empty($company->address))<div class="text-[10px] text-slate-500">{{ $company->address }}</div>@endif
-    @if(!empty($company->phone))<div class="text-[10px] text-slate-500">{{ $company->phone }}</div>@endif
-    <div class="text-xs font-semibold mt-1">NOTA PENJUALAN</div>
-    
+  {{-- Header: logo rata kiri, nama perusahaan di samping logo, alamat & HP di bawah nama --}}
+  <div class="border-b-2 border-slate-800 pb-3 mb-3">
+    <div class="flex items-center gap-3">
+      <img src="{{ ($company ?? null) ? $company->logoUrl() : asset('logo.png') }}" alt="{{ ($company->name ?? 'Datanet') }}" class="h-12 w-12 object-contain shrink-0">
+      <div class="text-left leading-tight">
+        <div class="font-bold text-lg tracking-tight text-[#1b2d4a]">{{ strtoupper($company->name ?? 'DATANET') }}</div>
+        @if(!empty($company->address))<div class="text-[10px] text-slate-500 mt-0.5">{{ $company->address }}</div>@endif
+        @if(!empty($company->phone))<div class="text-[10px] text-slate-500">{{ $company->phone }}</div>@endif
+        @if(!empty($company->email))<div class="text-[10px] text-slate-500">{{ $company->email }}</div>@endif
+      </div>
+    </div>
+    <div class="text-left text-xs font-semibold mt-2">NOTA PENJUALAN</div>
   </div>
   <div class="text-xs space-y-1 mb-3">
     <div class="flex justify-between"><span class="text-slate-500">No Nota</span><span class="font-mono font-bold">{{ $nota->no_nota }}</span></div>

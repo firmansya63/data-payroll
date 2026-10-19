@@ -110,6 +110,17 @@ class PayrollController extends Controller
                     'status'=>'final',
                 ]
             );
+
+            // Generate signature hash dan barcode data jika belum ada
+            if (!$payroll->signature_hash) {
+                $company = \App\Models\CompanySetting::current();
+                // signed_at diset lebih dulu: hash memakai timestamp dari signed_at
+                // supaya bisa dihitung ulang saat verifikasi.
+                $payroll->signed_at = now();
+                $payroll->signature_hash = \App\Helpers\BarcodeGenerator::generateSignatureHash($payroll, $company);
+                $payroll->barcode_data = \App\Helpers\BarcodeGenerator::generateBarcodeData($payroll, $company);
+                $payroll->save();
+            }
             Deduction::where('employee_id',$eid)->whereMonth('tanggal',$bulan)->whereYear('tanggal',$tahun)->where('status','belum_dipotong')->update(['status'=>'sudah_dipotong','payroll_id'=>$payroll->id]);
             $count++;
         }
@@ -134,6 +145,18 @@ class PayrollController extends Controller
         if($potonganList->isEmpty()){
             $potonganList = Deduction::where('employee_id',$payroll->employee_id)->whereMonth('tanggal',$payroll->periode_bulan)->whereYear('tanggal',$payroll->periode_tahun)->get();
         }
+
+        // Generate signature dan barcode jika belum ada
+        if (!$payroll->signature_hash) {
+            $company = \App\Models\CompanySetting::current();
+            // signed_at diset lebih dulu: hash memakai timestamp dari signed_at
+            // supaya bisa dihitung ulang saat verifikasi.
+            $payroll->signed_at = now();
+            $payroll->signature_hash = \App\Helpers\BarcodeGenerator::generateSignatureHash($payroll, $company);
+            $payroll->barcode_data = \App\Helpers\BarcodeGenerator::generateBarcodeData($payroll, $company);
+            $payroll->save();
+        }
+
         return view('payrolls.slip', compact('payroll','insentifList','potonganList'));
     }
 

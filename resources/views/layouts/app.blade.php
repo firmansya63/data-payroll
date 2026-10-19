@@ -47,6 +47,7 @@
           <a href="{{ route('presences.calendar') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition {{ $is('presences.*') ? $act : $idle }}"><i class="fa-solid fa-calendar-check w-6 text-center"></i> Presensi</a>
           <a href="{{ route('payrolls.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition {{ $is('payrolls.*') ? $act : $idle }}"><i class="fa-solid fa-money-bill-wave w-6 text-center"></i> Payroll</a>
           <a href="{{ route('deductions.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition {{ $is('deductions.*') ? $act : $idle }}"><i class="fa-solid fa-hand-holding-dollar w-6 text-center"></i> Kasbon</a>
+          <a href="{{ route('signature.verify') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition {{ $is('signature.*') ? $act : $idle }}"><i class="fa-solid fa-qrcode w-6 text-center"></i> Verifikasi TTD</a>
         </div>
       </div>
         <div>

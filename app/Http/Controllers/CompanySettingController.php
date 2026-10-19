@@ -26,11 +26,14 @@ class CompanySettingController extends Controller
             'pimpinan_nama' => 'nullable|string|max:100',
             'pimpinan_jabatan' => 'nullable|string|max:100',
             'footer_text' => 'nullable|string|max:500',
+            'signature_enabled' => 'nullable|boolean',
+            'signature_type' => 'nullable|string|in:barcode,qrcode',
+            'signature_salt' => 'nullable|string|max:255',
         ]);
 
         $company = CompanySetting::current();
 
-        $data = $r->only(['name','tagline','address','phone','email','website','pimpinan_nama','pimpinan_jabatan','footer_text']);
+        $data = $r->only(['name','tagline','address','phone','email','website','pimpinan_nama','pimpinan_jabatan','footer_text','signature_enabled','signature_type','signature_salt']);
 
         if ($r->hasFile('logo')) {
             if ($company->logo_path && Storage::disk('public')->exists($company->logo_path)) {

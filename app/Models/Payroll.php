@@ -5,8 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 class Payroll extends Model
 {
     use HasFactory;
-    protected $fillable=['employee_id','periode_bulan','periode_tahun','gaji_pokok','jml_hadir','bonus_kehadiran','total_insentif','total_potongan','jam_lembur','total_lembur','catatan_lembur','total_terima','status','catatan'];
-    protected $casts=['gaji_pokok'=>'decimal:2','bonus_kehadiran'=>'decimal:2','total_insentif'=>'decimal:2','total_potongan'=>'decimal:2','jam_lembur'=>'decimal:2','total_lembur'=>'decimal:2','total_terima'=>'decimal:2'];
+    protected $fillable=['employee_id','periode_bulan','periode_tahun','gaji_pokok','jml_hadir','bonus_kehadiran','total_insentif','total_potongan','jam_lembur','total_lembur','catatan_lembur','total_terima','status','catatan','signature_hash','signed_at','barcode_type','barcode_data'];
+    protected $casts=['gaji_pokok'=>'decimal:2','bonus_kehadiran'=>'decimal:2','total_insentif'=>'decimal:2','total_potongan'=>'decimal:2','jam_lembur'=>'decimal:2','total_lembur'=>'decimal:2','total_terima'=>'decimal:2','signed_at'=>'datetime'];
     public function employee(){ return $this->belongsTo(Employee::class); }
     public function deductions(){ return $this->hasMany(Deduction::class); }
     public function periodeLabel(): string
