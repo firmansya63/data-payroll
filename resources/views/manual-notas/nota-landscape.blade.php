@@ -9,10 +9,10 @@
 <style>*{font-family:Inter,sans-serif} @page{size:A4 landscape; margin:12mm} @media print{.no-print{display:none!important}} *{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
 </head>
 <body class="bg-slate-100 p-2 md:p-3">
-<div class="no-print max-w-[900px] mx-auto mb-3 flex gap-2 flex-wrap">
-  <button onclick="window.print()" class="flex-1 min-w-[120px] bg-indigo-600 text-white py-2.5 rounded-xl font-semibold">Cetak (A4 Landscape)</button>
-  <a href="{{ route('manual-notas.nota',$nota) }}" class="px-4 py-2.5 bg-slate-800 text-white rounded-xl text-sm font-semibold">↩ A4 Portrait</a>
-  <a href="{{ route('manual-notas.index') }}" class="px-4 py-2.5 border bg-white rounded-xl text-sm">Kembali</a>
+<div class="no-print mx-auto mb-3 flex max-w-[900px] flex-wrap items-center gap-2 rounded-2xl bg-white/80 p-2 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl">
+  <button onclick="window.print()" class="inline-flex min-w-[120px] flex-1 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:brightness-110">Cetak (A4 Landscape)</button>
+  <a href="{{ route('manual-notas.nota',$nota) }}" class="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-violet-600 ring-1 ring-violet-200 transition hover:bg-violet-50">↩ A4 Portrait</a>
+  <a href="{{ route('manual-notas.index') }}" class="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">Kembali</a>
 </div>
 <div class="max-w-[900px] mx-auto bg-white p-5 shadow border print:shadow-none print:p-3">
   {{-- Header: logo rata kiri, nama perusahaan di samping logo, alamat & HP di bawah nama --}}
