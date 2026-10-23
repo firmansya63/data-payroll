@@ -49,13 +49,11 @@ class Handler extends ExceptionHandler
                 return null;
             }
 
-            $diagnostics = $this->databaseDiagnostics($e);
+            $diagnostics = $this->databaseDiagnostics();
 
             if ($request->expectsJson()) {
                 return response()->json([
                     'message' => 'Koneksi database terputus. Silakan coba beberapa saat lagi.',
-                    'code' => $diagnostics['code'],
-                    'reference' => $diagnostics['ref'],
                     'retry_after' => self::RETRY_AFTER_SECONDS,
                 ], 503)
                     ->header('Retry-After', (string) self::RETRY_AFTER_SECONDS)
@@ -134,92 +132,18 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Data yang aman ditampilkan pada halaman error (tanpa credential).
+     * Data minimum untuk halaman error — tanpa detail infrastruktur
+     * (driver, host, port, nama database, maupun kode error).
      *
      * @return array<string, mixed>
      */
-    protected function databaseDiagnostics(Throwable $e): array
+    protected function databaseDiagnostics(): array
     {
-        $connection = (string) config('database.default', 'mysql');
-        $config = (array) config("database.connections.{$connection}", []);
-
-        [$code, $rawMessage] = $this->connectionFailureCode($e);
-
-        $reasons = [
-            '2002' => 'Layanan MySQL/MariaDB kemungkinan belum berjalan, atau host/port pada konfigurasi tidak sesuai.',
-            '2003' => 'Server database tidak dapat dijangkau dari host ini (firewall atau alamat server salah).',
-            '2005' => 'Nama host database tidak dikenal — periksa kembali DB_HOST.',
-            '2006' => 'Koneksi ke server database terputus (server timeout atau baru saja restart).',
-            '2013' => 'Koneksi ke server database terputus di tengah proses.',
-            '1045' => 'Akses ditolak — username atau password database salah.',
-            '1049' => 'Database belum dibuat di server MySQL/MariaDB.',
-            '08001' => 'Aplikasi gagal membuat koneksi ke server database.',
-            '08004' => 'Server database menolak koneksi dari aplikasi.',
-            '08006' => 'Koneksi ke server database terputus.',
-            'DRIVER' => 'Ekstensi PHP untuk driver database belum aktif (mis. pdo_mysql).',
-        ];
-
-        $reason = $reasons[$code]
-            ?? 'Server database tidak merespons. Periksa kembali layanan dan konfigurasi database.';
-
         return [
             'appName' => (string) config('app.name', 'Datanet'),
-            'driver' => $connection,
-            'host' => (string) ($config['host'] ?? '-'),
-            'port' => (string) ($config['port'] ?? '-'),
-            'database' => (string) ($config['database'] ?? '-'),
-            'code' => $code,
-            'reason' => $reason,
-            'ref' => 'DB-'.$code.'-'.now()->format('ymd-His'),
-            'checkedAt' => now()->format('d M Y H:i:s'),
+            'reason' => 'Terjadi kesalahan pada database. Layanan sedang tidak dapat diakses, silakan coba beberapa saat lagi.',
             'retrySeconds' => self::RETRY_AFTER_SECONDS,
-            'debug' => (bool) config('app.debug', false),
-            'detail' => $this->sanitizeDetail($rawMessage),
         ];
-    }
-
-    /**
-     * Ambil kode kegagalan koneksi (mis. 2002) dari pesan exception.
-     *
-     * @return array{0: string, 1: string}
-     */
-    protected function connectionFailureCode(Throwable $e): array
-    {
-        $message = '';
-
-        foreach ($this->exceptionChain($e) as $exception) {
-            $isDatabaseException = $exception instanceof QueryException || $exception instanceof PDOException;
-
-            if ($isDatabaseException && $exception->getMessage() !== '') {
-                $message = $exception->getMessage();
-                break;
-            }
-        }
-
-        foreach (['2002', '2003', '2005', '2006', '2013', '1045', '1049', '08001', '08004', '08006'] as $known) {
-            if (Str::contains($message, '['.$known.']')) {
-                return [$known, $message];
-            }
-        }
-
-        if (Str::contains($message, 'could not find driver')) {
-            return ['DRIVER', $message];
-        }
-
-        return ['N/A', $message];
-    }
-
-    /**
-     * Buang bagian SQL/binding dari pesan exception agar tidak membocorkan data.
-     */
-    protected function sanitizeDetail(string $message): string
-    {
-        $parts = preg_split('/\s*\(Connection:\s*/i', $message);
-
-        $message = $parts[0] ?? $message;
-        $message = trim((string) preg_replace('/\s+/', ' ', $message));
-
-        return Str::limit($message, 240);
     }
 
     /**

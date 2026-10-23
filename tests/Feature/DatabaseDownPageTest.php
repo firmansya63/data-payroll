@@ -33,12 +33,25 @@ class DatabaseDownPageTest extends TestCase
         $html = (string) $response->getContent();
 
         $this->assertStringContainsString('Koneksi Database Terputus', $html);
+        $this->assertStringContainsString('Kesalahan Database', $html);
         $this->assertStringContainsString('Coba Lagi', $html);
-        $this->assertStringContainsString('Kemungkinan penyebab', $html);
 
-        // Tidak boleh membocorkan stack trace maupun SQL.
+        // Tidak boleh membocorkan stack trace, SQL, maupun detail infrastruktur.
         $this->assertStringNotContainsString('vendor/laravel', $html);
         $this->assertStringNotContainsString('select * from', $html);
+        $this->assertStringNotContainsString('Detail teknis', $html);
+        $this->assertStringNotContainsString('DB_HOST', $html);
+        $this->assertStringNotContainsString('DB_DATABASE', $html);
+
+        $mysql = (array) config('database.connections.mysql');
+
+        foreach (['host', 'port', 'database'] as $key) {
+            $value = (string) ($mysql[$key] ?? '');
+
+            if ($value !== '') {
+                $this->assertStringNotContainsString($value, $html, "Halaman 503 tidak boleh memuat {$key} database.");
+            }
+        }
     }
 
     public function test_request_json_mendapat_response_json_503(): void
@@ -52,9 +65,10 @@ class DatabaseDownPageTest extends TestCase
 
         $payload = json_decode((string) $response->getContent(), true);
 
+        // Hanya pesan umum: tanpa kode error, referensi, maupun detail koneksi.
+        $this->assertSame(['message', 'retry_after'], array_keys((array) $payload));
         $this->assertSame('Koneksi database terputus. Silakan coba beberapa saat lagi.', $payload['message'] ?? null);
         $this->assertSame(20, $payload['retry_after'] ?? null);
-        $this->assertSame('2002', $payload['code'] ?? null);
     }
 
     public function test_error_query_biasa_tidak_dianggap_database_mati(): void

@@ -65,20 +65,12 @@
   .reason p{margin:0}
   .reason .t{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#92400e}
   .reason .d{margin-top:3px;font-size:12.5px;line-height:1.6;color:#78350f}
-  .meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 17px}
-  @media(min-width:560px){.meta{grid-template-columns:repeat(4,minmax(0,1fr))}}
-  .meta div{min-width:0;background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:9px 11px}
-  .meta dt{font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8}
-  .meta dd{margin:3px 0 0;font-size:11.5px;font-weight:600;color:#334155;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
   .steps{list-style:none;margin:0 0 19px;padding:0;display:grid;gap:9px}
   .steps li{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.6;color:#475569}
   .steps .n{flex:none;margin-top:1px;width:20px;height:20px;border-radius:7px;background:#eef2ff;color:#4338ca;
     font-size:11px;font-weight:700;display:grid;place-items:center}
   .steps p{margin:0}
   .steps b{color:#1e293b;font-weight:600}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;color:#4338ca;
-    background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:1px 5px}
   .actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding-top:2px}
   .btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font:inherit;font-size:12.5px;font-weight:600;
     padding:11px 18px;border-radius:13px;transition:transform .18s ease,box-shadow .18s ease}
@@ -89,13 +81,8 @@
   .btn-primary:active{transform:translateY(0)}
   .countdown{margin:0;font-size:11.5px;color:#94a3b8}
   .countdown b{color:var(--indigo);font-variant-numeric:tabular-nums}
-  .debug{margin-top:17px;border:1px dashed #cbd5e1;border-radius:13px;padding:10px 13px;background:#f8fafc}
-  .debug summary{cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.02em;color:#64748b}
-  .debug pre{margin:9px 0 0;white-space:pre-wrap;word-break:break-word;font-size:11px;line-height:1.65;color:#475569;
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  .foot{display:flex;flex-wrap:wrap;gap:5px 14px;align-items:center;justify-content:space-between;margin-top:17px;
+  .foot{display:flex;flex-wrap:wrap;gap:5px 14px;align-items:center;justify-content:center;margin-top:17px;
     padding-top:13px;border-top:1px solid var(--line);font-size:10.5px;color:#94a3b8}
-  .foot code{background:transparent;border:0;padding:0;font-size:10px;color:#64748b}
   @media(prefers-reduced-motion:reduce){.card,.pill .dot{animation:none!important}*{transition:none!important}}
 </style>
 </head>
@@ -130,22 +117,15 @@
   <div class="reason">
     <span class="reason-ico" aria-hidden="true">!</span>
     <div>
-      <p class="t">Kemungkinan penyebab</p>
+      <p class="t">Kesalahan Database</p>
       <p class="d">{{ $reason }}</p>
     </div>
   </div>
 
-  <dl class="meta">
-    <div><dt>Driver</dt><dd title="{{ $driver ?? '-' }}">{{ $driver ?? '-' }}</dd></div>
-    <div><dt>Server</dt><dd title="{{ ($host ?? '-') . ':' . ($port ?? '-') }}">{{ $host ?? '-' }}:{{ $port ?? '-' }}</dd></div>
-    <div><dt>Database</dt><dd title="{{ $database ?? '-' }}">{{ $database ?? '-' }}</dd></div>
-    <div><dt>Kode</dt><dd>{{ $code ?? 'N/A' }}</dd></div>
-  </dl>
-
   <ol class="steps">
-    <li><span class="n">1</span><p>Pastikan layanan <b>MySQL/MariaDB</b> sudah berjalan &mdash; di Laragon klik <b>Start All</b>.</p></li>
-    <li><span class="n">2</span><p>Bila masih gagal, periksa <code>DB_HOST</code>, <code>DB_PORT</code>, dan <code>DB_DATABASE</code> pada file <code>.env</code>.</p></li>
-    <li><span class="n">3</span><p>Setelah layanan database menyala, tekan <b>Coba Lagi</b> atau tunggu percobaan otomatis di bawah ini.</p></li>
+    <li><span class="n">1</span><p>Tunggu sebentar &mdash; halaman ini akan mencoba menyambung ulang secara otomatis.</p></li>
+    <li><span class="n">2</span><p>Tekan <b>Coba Lagi</b> bila Anda ingin mencoba saat ini juga.</p></li>
+    <li><span class="n">3</span><p>Jika gangguan berlangsung lama, silakan hubungi admin/IT.</p></li>
   </ol>
 
   <div class="actions">
@@ -159,15 +139,7 @@
     <p class="countdown" id="countdown" aria-live="polite"></p>
   </div>
 
-  @if(!empty($debug) && !empty($detail))
-  <details class="debug">
-    <summary>Detail teknis (mode debug)</summary>
-    <pre>{{ $detail }}</pre>
-  </details>
-  @endif
-
   <div class="foot">
-    <span>Ref: <code>{{ $ref ?? '-' }}</code> &middot; {{ $checkedAt ?? '' }}</span>
     <span>&copy; {{ date('Y') }} {{ $appName ?? 'Datanet' }} &middot; Payroll &amp; Voucher</span>
   </div>
 </main>
