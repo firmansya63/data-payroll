@@ -16,8 +16,6 @@
   @keyframes loginIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
   .login-in{animation:loginIn .6s cubic-bezier(.22,1,.36,1) both}
   .grid-mask{background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:34px 34px}
-  summary::-webkit-details-marker{display:none}
-  details[open] .chev{transform:rotate(180deg)}
   @media (prefers-reduced-motion:reduce){.login-in{animation:none!important}*{transition:none!important}}
 </style>
 </head>
@@ -121,7 +119,7 @@
             <label for="email" class="mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.1em] text-slate-500">Email</label>
             <div class="relative">
               <span class="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[13px] text-slate-400" aria-hidden="true"><i class="fa-regular fa-envelope"></i></span>
-              <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="admin@datanet.net"
+              <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
                      class="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50/80 pl-10 pr-3.5 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm transition hover:border-slate-300 focus:border-violet-400 focus:bg-white focus:outline-none focus:ring-4 focus:ring-violet-500/15">
             </div>
           </div>
@@ -155,23 +153,6 @@
             <span id="submitLabel">Masuk</span>
           </button>
         </form>
-
-        <details class="group mt-5 rounded-2xl bg-amber-50/70 px-3.5 py-3 ring-1 ring-amber-200/70">
-          <summary class="flex cursor-pointer list-none items-center gap-2 text-[11.5px] font-semibold text-amber-800">
-            <i class="fa-solid fa-circle-info text-amber-500" aria-hidden="true"></i>
-            Kredensial demo
-            <i class="fa-solid fa-chevron-down chev ml-auto text-[10px] text-amber-500 transition-transform duration-200" aria-hidden="true"></i>
-          </summary>
-          <div class="mt-2.5 space-y-1.5 text-[11.5px] leading-relaxed text-amber-800/90">
-            <p class="flex flex-wrap items-center gap-1.5">Email
-              <span class="rounded-lg bg-white/80 px-2 py-0.5 font-mono text-[11px] ring-1 ring-amber-200">admin@datanet.net</span>
-            </p>
-            <p class="flex flex-wrap items-center gap-1.5">Password
-              <span class="rounded-lg bg-white/80 px-2 py-0.5 font-mono text-[11px] ring-1 ring-amber-200">password</span>
-            </p>
-            <p class="text-[10.5px] text-amber-700/80">Segera ganti password setelah login pertama.</p>
-          </div>
-        </details>
       </div>
 
       <p class="mt-4 px-6 text-center text-[11px] leading-relaxed text-slate-400">Dengan masuk, Anda menyetujui penggunaan sistem internal Datanet.</p>

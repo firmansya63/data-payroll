@@ -37,4 +37,13 @@ class LoginPageTest extends TestCase
         $this->assertStringNotContainsString('#1b2d4a', $html);
         $this->assertStringNotContainsString('#f68b1e', $html);
     }
+
+    public function test_halaman_login_tidak_menampilkan_kredensial_demo(): void
+    {
+        $html = (string) $this->get('/login')->getContent();
+
+        $this->assertStringNotContainsString('Kredensial demo', $html);
+        $this->assertStringNotContainsString('admin@datanet.net', $html);
+        $this->assertStringNotContainsString('placeholder="admin@datanet.net"', $html);
+    }
 }
