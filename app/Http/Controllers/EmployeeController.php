@@ -6,8 +6,8 @@ class EmployeeController extends Controller
 {
     public function index(Request $r){
         $q = Employee::query();
-        if($s=$r->q) $q->where('nama','like',"%$s%")->orWhere('jabatan','like',"%$s%");
-        if($r->has('aktif')) $q->where('is_active', $r->aktif==1);
+        if($s=$r->q) $q->where(fn($w) => $w->where('nama','like',"%$s%")->orWhere('jabatan','like',"%$s%"));
+        if($r->filled('aktif')) $q->where('is_active', $r->aktif==1);
         $employees = $q->latest()->paginate(15)->withQueryString();
         return view('employees.index', compact('employees'));
     }
