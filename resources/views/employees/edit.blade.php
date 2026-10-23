@@ -43,6 +43,10 @@
         <label class="block text-sm font-medium text-slate-600 md:col-span-2">No HP
           <input name="no_hp" value="{{ old('no_hp',$employee->no_hp) }}" inputmode="tel" autocomplete="tel" placeholder="08xxxxxxxxxx" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
         </label>
+        <label class="block text-sm font-medium text-slate-600 md:col-span-2">Alamat
+          <textarea name="alamat" rows="2" placeholder="Opsional" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">{{ old('alamat',$employee->alamat) }}</textarea>
+        </label>
+      </div>
 
       <label for="is_active" class="flex cursor-pointer select-none items-center justify-between gap-3 rounded-2xl bg-slate-50/80 px-3.5 py-3 ring-1 ring-slate-200">
         <span class="min-w-0">
@@ -65,8 +69,3 @@
   </div>
 </div>
 @endsection
-
-        <label class="block text-sm font-medium text-slate-600 md:col-span-2">Alamat
-          <textarea name="alamat" rows="2" placeholder="Opsional" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">{{ old('alamat',$employee->alamat) }}</textarea>
-        </label>
-      </div>
