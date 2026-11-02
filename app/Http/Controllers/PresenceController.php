@@ -63,9 +63,11 @@ class PresenceController extends Controller
         return view('presences.calendar', compact('bulan','tahun','employees','selectedEmployee','employeeId','first','daysInMonth','firstDayIso','offset','prev','next','grouped','rekap','presencesMonth','rekapSemua'));
     }
 
-    public function create(){
+    public function create(Request $r){
         $employees = Employee::where('is_active',true)->orderBy('nama')->get();
-        return view('presences.create', compact('employees'));
+        $selectedEmployeeId = old('employee_id', $r->query('employee_id'));
+        $selectedDate = old('tanggal', $r->query('tanggal', date('Y-m-d')));
+        return view('presences.create', compact('employees','selectedEmployeeId','selectedDate'));
     }
     public function store(Request $r){
         $r->validate([

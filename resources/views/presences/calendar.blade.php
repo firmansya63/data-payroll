@@ -45,7 +45,7 @@
           @endif
         </div>
       </div>
-      <p class="text-[11px] text-slate-400"><i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i> Kosongkan karyawan untuk <b class="text-slate-600">rekap semua</b> periode ini; pilih satu untuk kalender per orang. Klik tanggal &rarr; Bulk Harian.</p>
+      <p class="text-[11px] text-slate-400"><i class="fa-solid fa-circle-info mr-1" aria-hidden="true"></i> Kosongkan karyawan untuk <b class="text-slate-600">rekap semua</b> periode ini; pilih satu untuk kalender per orang. Klik tanggal pada kalender individu untuk input presensi karyawan tersebut.</p>
     </form>
     @if(!$selectedEmployee)
       <div class="vch-in overflow-hidden rounded-3xl bg-white/80 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl" style="animation-delay:.1s">
@@ -161,10 +161,10 @@
               $isToday = $key === $todayStr;
               $isWeekend = $date->isWeekend();
               $isSunday = $date->isSunday();
-              $bulkUrl = route('presences.bulk', ['tanggal'=>$key]);
+              $attendanceUrl = route('presences.create', ['employee_id'=>$selectedEmployee->id, 'tanggal'=>$key]);
               $c = $status ? ($cfg[$status] ?? null) : null;
             @endphp
-            <a href="{{ $bulkUrl }}" class="group relative flex min-h-[48px] flex-col p-1.5 text-left transition hover:brightness-[0.98] md:min-h-[52px] {{ $status ? $c['bg'].' '.$c['bd'].' border' : 'border border-transparent '.($isWeekend ? ($isSunday ? 'bg-rose-50/70' : 'bg-slate-50') : 'bg-white') }} {{ $isToday ? 'z-10 ring-2 ring-indigo-400 ring-inset' : '' }}" title="Bulk {{ $date->translatedFormat('l, d F Y') }}">
+            <a href="{{ $attendanceUrl }}" class="group relative flex min-h-[48px] flex-col p-1.5 text-left transition hover:brightness-[0.98] md:min-h-[52px] {{ $status ? $c['bg'].' '.$c['bd'].' border' : 'border border-transparent '.($isWeekend ? ($isSunday ? 'bg-rose-50/70' : 'bg-slate-50') : 'bg-white') }} {{ $isToday ? 'z-10 ring-2 ring-indigo-400 ring-inset' : '' }}" title="Input presensi {{ $date->translatedFormat('l, d F Y') }}">
               <div class="flex items-center justify-between">
                 <span class="grid h-5 w-5 place-items-center rounded-lg text-[10px] font-bold {{ $isToday ? 'bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-sm shadow-indigo-500/30' : '' }} {{ !$isToday && $isSunday ? 'bg-rose-100 text-rose-600' : '' }} {{ !$isToday && !$isSunday && $isWeekend ? 'bg-slate-100 text-slate-500' : '' }} {{ !$isToday && !$isWeekend ? 'bg-slate-100 text-slate-700 group-hover:bg-white' : '' }}">{{ $d }}</span>
                 @if($isToday)<span class="hidden text-[9px] font-bold text-indigo-600 md:inline">HARI INI</span>@endif
@@ -196,7 +196,7 @@
           <span class="inline-flex items-center gap-1.5 text-slate-500"><span class="h-2.5 w-2.5 rounded-full bg-rose-500"></span> Alpha</span>
           <span class="inline-flex items-center gap-1.5 text-slate-500"><span class="h-2.5 w-2.5 rounded-full border border-slate-200 bg-slate-100"></span> Sabtu</span>
           <span class="inline-flex items-center gap-1.5 text-slate-500"><span class="h-2.5 w-2.5 rounded-full border border-rose-200 bg-rose-100"></span> Minggu / LIBUR</span>
-          <span class="ml-auto text-[11px] text-slate-400"><i class="fa-solid fa-hand-pointer mr-1" aria-hidden="true"></i> Klik tanggal &rarr; Bulk (prefill tanggal)</span>
+          <span class="ml-auto text-[11px] text-slate-400"><i class="fa-solid fa-hand-pointer mr-1" aria-hidden="true"></i> Klik tanggal &rarr; Input Presensi Individu</span>
         </div>
       </div>
 

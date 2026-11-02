@@ -24,10 +24,10 @@
       <label class="block text-sm font-medium text-slate-600">Karyawan*
         <select name="employee_id" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
           <option value="">-- Pilih Karyawan --</option>
-          @foreach($employees as $e)<option value="{{ $e->id }}" {{ old('employee_id')==$e->id?'selected':'' }}>{{ $e->nama }} ({{ $e->jabatan }})</option>@endforeach
+          @foreach($employees as $e)<option value="{{ $e->id }}" {{ (string)$selectedEmployeeId === (string)$e->id ? 'selected' : '' }}>{{ $e->nama }} ({{ $e->jabatan }})</option>@endforeach
         </select>
       </label>
-      <label class="block text-sm font-medium text-slate-600">Tanggal*<input type="date" name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"></label>
+      <label class="block text-sm font-medium text-slate-600">Tanggal*<input type="date" name="tanggal" value="{{ $selectedDate }}" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100"></label>
       <label class="block text-sm font-medium text-slate-600">Status*
         <select name="status" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
           <option value="hadir" {{ old('status')=='hadir'?'selected':'' }}>Hadir</option>
