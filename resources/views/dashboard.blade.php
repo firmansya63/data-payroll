@@ -36,7 +36,7 @@
       <div class="dash-in rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(244,63,94,.45)] md:p-5" style="animation-delay:.05s">
         <div class="flex items-start justify-between gap-1">
           <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-rose-500 to-red-500 text-white shadow-lg shadow-rose-500/30"><i class="fa-solid fa-file-invoice-dollar text-sm" aria-hidden="true"></i></span>
-          <span class="whitespace-nowrap rounded-full bg-rose-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-rose-600 ring-1 ring-rose-100 sm:text-[10px]">Belum lunas</span>
+          <span class="min-w-0 max-w-[calc(100%-2.75rem)] rounded-full bg-rose-50 px-2 py-0.5 text-center text-[9px] font-bold uppercase leading-tight tracking-wide text-rose-600 ring-1 ring-rose-100 sm:text-[10px]">Belum lunas</span>
         </div>
         <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">Total Piutang</p>
         <p class="text-[15px] font-extrabold leading-tight tracking-tight text-slate-800 tabular-nums sm:text-lg md:text-xl">Rp {{ number_format($totalPiutang,0,',','.') }}</p>
