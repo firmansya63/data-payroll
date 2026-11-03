@@ -52,6 +52,11 @@
                 <span>Voucher</span>
             </a>
 
+            <a href="{{ route('resellers.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition">
+                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-7h6v7M8 10h.01M12 10h.01M16 10h.01"/></svg>
+                <span>Reseller</span>
+            </a>
+
             <a href="{{ route('acquisitions.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium transition">
                 <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 20a6 6 0 00-12 0m6-10a4 4 0 100-8 4 4 0 000 8zm7-3v6m3-3h-6"/></svg>
                 <span>Klien Baru</span>
