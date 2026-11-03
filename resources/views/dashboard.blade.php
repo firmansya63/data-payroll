@@ -1,305 +1,435 @@
 @extends('layouts.app')
-@section('title','Dashboard')
+
 @section('content')
-<style>
-  @keyframes dashFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-  .dash-in{animation:dashFadeUp .55s cubic-bezier(.22,1,.36,1) both}
-  @media (prefers-reduced-motion:reduce){.dash-in{animation:none!important;transition:none!important}}
-</style>
-
-<div class="relative">
-  <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-    <div class="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-indigo-300/40 blur-3xl"></div>
-    <div class="absolute -right-10 top-10 h-80 w-80 rounded-full bg-fuchsia-300/30 blur-3xl"></div>
-    <div class="absolute left-1/3 top-[420px] h-72 w-72 rounded-full bg-violet-300/25 blur-3xl"></div>
-  </div>
-
-  <div class="relative z-10">
-    {{-- HERO --}}
-    <section class="dash-in relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-500 p-5 text-white shadow-[0_18px_45px_-18px_rgba(99,102,241,.65)] md:p-7">
-      <div class="pointer-events-none absolute -right-12 -top-20 h-56 w-56 rounded-full bg-white/15 blur-2xl" aria-hidden="true"></div>
-      <div class="pointer-events-none absolute -bottom-24 -left-12 h-64 w-64 rounded-full bg-fuchsia-300/25 blur-3xl" aria-hidden="true"></div>
-      <div class="relative flex flex-wrap items-start justify-between gap-4">
-        <div class="min-w-0">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70">Halo, {{ Auth::user()->name }}</p>
-          <h1 class="mt-1 text-2xl font-extrabold tracking-tight md:text-3xl">Dashboard</h1>
-          <p class="mt-1 text-xs text-white/75 md:text-sm">Ringkasan voucher, piutang, dan payroll dalam satu tampilan.</p>
-        </div>
-        <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold ring-1 ring-white/25 backdrop-blur">
-          <i class="fa-regular fa-calendar" aria-hidden="true"></i> Periode {{ now()->translatedFormat('F Y') }}
-        </span>
-      </div>
-    </section>
-
-    {{-- KPI --}}
-    <div class="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-      <div class="dash-in rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(244,63,94,.45)] md:p-5" style="animation-delay:.05s">
-        <div class="flex items-start justify-between gap-1">
-          <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-rose-500 to-red-500 text-white shadow-lg shadow-rose-500/30"><i class="fa-solid fa-file-invoice-dollar text-sm" aria-hidden="true"></i></span>
-          <span class="min-w-0 max-w-[calc(100%-2.75rem)] rounded-full bg-rose-50 px-2 py-0.5 text-center text-[9px] font-bold uppercase leading-tight tracking-wide text-rose-600 ring-1 ring-rose-100 sm:text-[10px]">Belum lunas</span>
-        </div>
-        <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">Total Piutang</p>
-        <p class="text-[15px] font-extrabold leading-tight tracking-tight text-slate-800 tabular-nums sm:text-lg md:text-xl">Rp {{ number_format($totalPiutang,0,',','.') }}</p>
-        <p class="mt-0.5 text-[11px] text-slate-400">Total tagihan berjalan</p>
-      </div>
-
-      <div class="dash-in rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(16,185,129,.45)] md:p-5" style="animation-delay:.1s">
-        <div class="flex items-start justify-between gap-1">
-          <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30"><i class="fa-solid fa-circle-check text-sm" aria-hidden="true"></i></span>
-          <span class="whitespace-nowrap rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-600 ring-1 ring-emerald-100 sm:text-[10px]">Lunas</span>
-        </div>
-        <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">Total Lunas</p>
-        <p class="text-[15px] font-extrabold leading-tight tracking-tight text-slate-800 tabular-nums sm:text-lg md:text-xl">Rp {{ number_format($totalLunas,0,',','.') }}</p>
-        <p class="mt-0.5 text-[11px] text-slate-400">Voucher terbayar</p>
-      </div>
-
-      <div class="dash-in rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(99,102,241,.45)] md:p-5" style="animation-delay:.15s">
-        <div class="flex items-start justify-between gap-1">
-          <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30"><i class="fa-solid fa-ticket text-sm" aria-hidden="true"></i></span>
-          <span class="whitespace-nowrap rounded-full bg-indigo-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-indigo-600 ring-1 ring-indigo-100 sm:text-[10px]">Bulan ini</span>
-        </div>
-        <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">Transaksi</p>
-        <p class="text-lg font-extrabold leading-tight tracking-tight text-slate-800 tabular-nums md:text-xl">{{ number_format($transaksiBulanIni,0,',','.') }}</p>
-        <p class="mt-0.5 text-[11px] text-slate-400">Voucher terjual</p>
-      </div>
-
-      <div class="dash-in rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_-18px_rgba(245,158,11,.45)] md:p-5" style="animation-delay:.2s">
-        <div class="flex items-start justify-between gap-1">
-          <span class="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-500/30"><i class="fa-solid fa-users text-sm" aria-hidden="true"></i></span>
-          <span class="whitespace-nowrap rounded-full bg-amber-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-amber-600 ring-1 ring-amber-100 sm:text-[10px]">Aktif</span>
-        </div>
-        <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">Karyawan</p>
-        <p class="text-lg font-extrabold leading-tight tracking-tight text-slate-800 tabular-nums md:text-xl">{{ number_format($karyawanAktif,0,',','.') }}</p>
-        <p class="mt-0.5 text-[11px] text-slate-400">{{ $hadirHariIni }} hadir hari ini</p>
-      </div>
-    </div>
-    {{-- GRAFIK & PIUTANG --}}
-    <div class="mt-4 grid gap-4 md:grid-cols-3">
-      <section class="dash-in rounded-3xl bg-white/80 p-4 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] ring-1 ring-white/70 backdrop-blur-xl md:col-span-2 md:p-5" style="animation-delay:.25s">
-        <div class="mb-4 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5">
-            <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30"><i class="fa-solid fa-chart-line text-sm" aria-hidden="true"></i></span>
-            <div>
-              <h3 class="font-bold leading-tight text-slate-800">Penjualan 6 Bulan Terakhir</h3>
-              <p class="text-[11px] text-slate-400">Nominal voucher terjual</p>
+<div class="space-y-6">
+    <!-- 1. HERO HEADER GREETING -->
+    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-blue-100 text-blue-700">
+                    JAKARTA CENTRAL STORE #01
+                </span>
+                <span class="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live System
+                </span>
             </div>
-          </div>
-          <span class="hidden shrink-0 rounded-full bg-indigo-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-indigo-600 ring-1 ring-indigo-100 sm:inline">6 bulan</span>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Pagi, Sarah 👋</h2>
+            <p class="text-sm text-slate-500 mt-1">
+                Ringkasan operasional tim hari ini: <span class="font-semibold text-slate-700">94.6%</span> karyawan hadir tepat waktu & target penjualan ritel berjalan optimal.
+            </p>
         </div>
-        @php $max = $chart->max('total') ?: 1; $sum6 = $chart->sum('total'); @endphp
-        @if($sum6 == 0)
-          <div class="py-12 text-center">
-            <div class="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-indigo-50 to-fuchsia-50 text-indigo-400 ring-1 ring-indigo-100"><i class="fa-solid fa-chart-column text-lg" aria-hidden="true"></i></div>
-            <p class="text-sm font-semibold text-slate-600">Belum ada penjualan 6 bulan terakhir</p>
-            <p class="mt-1 text-xs text-slate-400">Grafik akan muncul setelah ada transaksi</p>
-          </div>
-        @else
-          <div class="relative h-[230px] w-full md:h-[260px]"><canvas id="salesChart"></canvas></div>
-          <div class="mt-5 border-t border-slate-100 pt-4">
-            <p class="mb-3 text-[11px] font-semibold tracking-[0.12em] text-slate-400">RINCIAN PER BULAN</p>
-            <div class="space-y-2.5">
-              @foreach($chart as $c)
-                @php $pct = $max ? $c['total']/$max*100 : 0; $isSmall = $pct < 18 && $c['total'] > 0; $isZero = $c['total'] == 0; @endphp
-                <div class="flex items-center gap-2.5">
-                  <span class="w-[84px] shrink-0 truncate text-right text-xs font-medium text-slate-500 md:w-[96px]" title="{{ $c['label_full'] }}">{{ $c['label'] }}</span>
-                  <div class="flex min-w-0 flex-1 items-center gap-2">
-                    <div class="relative h-7 flex-1 overflow-hidden rounded-full bg-slate-100">
-                      @if(!$isZero)
-                        <div class="flex h-7 items-center rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-xs font-semibold text-white transition-all duration-700 {{ $isSmall ? '' : 'justify-between px-2.5' }}" style="width:{{ max($isSmall ? 14 : 8, $pct) }}%">
-                          @if(!$isSmall)
-                            <span class="truncate">Rp {{ number_format($c['total'],0,',','.') }}</span>
-                            @if($pct > 42)<span class="hidden text-[10px] font-normal opacity-80 sm:inline">{{ number_format($pct,0) }}%</span>@endif
-                          @endif
-                        </div>
-                      @endif
-                    </div>
-                    <span class="shrink-0 text-right text-xs font-semibold tabular-nums min-w-[96px] {{ $isZero ? 'text-slate-400' : 'text-slate-700' }}" title="Rp {{ number_format($c['total'],0,',','.') }}">
-                      @if($isSmall || $isZero) Rp {{ number_format($c['total'],0,',','.') }} @endif
-                    </span>
-                  </div>
+
+        <!-- Shift Card Info -->
+        <div class="flex items-center gap-4 bg-white p-3.5 px-5 rounded-2xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
+                🏪
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Shift Pagi Berjalan</span>
+                    <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-100 text-emerald-700">Aktif</span>
                 </div>
-              @endforeach
+                <div class="text-base font-bold text-slate-900">08:00 – 16:30 WIB</div>
+                <div class="text-[11px] text-slate-400">Supervisor: <span class="font-medium text-slate-600">Rian Maulana</span></div>
             </div>
-          </div>
-        @endif
-      </section>
-      <section class="dash-in rounded-3xl bg-white/80 p-4 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] ring-1 ring-white/70 backdrop-blur-xl md:p-5" style="animation-delay:.3s">
-        <div class="mb-3 flex items-center gap-2.5">
-          <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 text-white shadow-lg shadow-amber-500/30"><i class="fa-solid fa-triangle-exclamation text-sm" aria-hidden="true"></i></span>
-          <div>
-            <h3 class="font-bold leading-tight text-slate-800">Piutang Terbesar</h3>
-            <p class="text-[11px] text-slate-400">Belum lunas per reseller</p>
-          </div>
         </div>
-        @forelse($piutangPerReseller as $r)
-          <div class="flex items-center gap-2.5 border-b border-slate-100 py-2.5 last:border-0">
-            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-rose-500 to-orange-400 text-[10px] font-bold text-white">{{ $loop->iteration }}</span>
-            <span class="min-w-0 flex-1 truncate text-sm font-medium text-slate-700">{{ $r->reseller->nama ?? '-' }}</span>
-            <span class="shrink-0 text-xs font-bold tabular-nums text-rose-600">Rp {{ number_format($r->total,0,',','.') }}</span>
-          </div>
-        @empty
-          <div class="py-8 text-center">
-            <div class="mx-auto mb-2 grid h-11 w-11 place-items-center rounded-2xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100"><i class="fa-solid fa-check" aria-hidden="true"></i></div>
-            <p class="text-sm text-slate-400">Tidak ada piutang</p>
-          </div>
-        @endforelse
-        <a href="{{ route('transactions.index',['status'=>'belum_lunas']) }}" class="mt-3 block rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 py-2 text-center text-sm font-semibold text-white shadow-lg shadow-amber-500/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2">Lihat Semua Tunggakan</a>
-      </section>
     </div>
 
-    {{-- DAFTAR TERBARU --}}
-    <div class="mt-4 grid gap-4 md:grid-cols-2">
-      <section class="dash-in rounded-3xl bg-white/80 p-4 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] ring-1 ring-white/70 backdrop-blur-xl md:p-5" style="animation-delay:.35s">
-        <div class="mb-3 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5">
-            <span class="grid h-9 w-9 place-items-center rounded-xl bg-rose-50 text-rose-500 ring-1 ring-rose-100"><i class="fa-solid fa-clock text-sm" aria-hidden="true"></i></span>
-            <div>
-              <h3 class="font-bold leading-tight text-slate-800">5 Tunggakan Terbaru</h3>
-              <p class="text-[11px] text-slate-400">Perlu ditagih</p>
+    <!-- 2. GRID 4 KPI STATS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Card 1: Karyawan Hadir -->
+        <div class="bg-white p-5 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                    👥
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">↑ +2.4%</span>
             </div>
-          </div>
-          <a href="{{ route('transactions.index',['status'=>'belum_lunas']) }}" class="shrink-0 text-[11px] font-semibold text-rose-600 hover:underline">Lihat semua</a>
+            <p class="text-xs font-medium text-slate-500">Karyawan Hadir</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">142 <span class="text-sm font-normal text-slate-400">/ 150</span></h3>
+            <p class="text-[11px] text-emerald-600 font-medium mt-1">94.6% rasio kehadiran tim</p>
         </div>
-        <div class="space-y-2 text-sm">
-          @forelse($piutangTerbaru as $t)
-            <div class="flex items-center justify-between gap-2 rounded-2xl bg-gradient-to-r from-rose-50 to-orange-50 p-3 ring-1 ring-rose-100/70">
-              <div class="min-w-0">
-                <div class="truncate font-semibold text-slate-800">{{ $t->reseller->nama ?? '-' }}</div>
-                <div class="mt-0.5 text-xs text-slate-500">{{ $t->tanggal->format('d/m/Y') }} &middot; Rp {{ number_format($t->nominal,0,',','.') }}</div>
-              </div>
-              <a href="{{ route('transactions.index') }}" class="shrink-0 rounded-lg bg-white px-2.5 py-1.5 text-[11px] font-semibold text-rose-600 ring-1 ring-rose-200 transition hover:bg-rose-600 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300">Tagih</a>
+
+        <!-- Card 2: Penjualan Hari Ini -->
+        <div class="bg-white p-5 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                    💳
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">↑ +14.2%</span>
             </div>
-          @empty
-            <p class="py-4 text-center text-sm text-slate-400">Tidak ada tunggakan recent</p>
-          @endforelse
+            <p class="text-xs font-medium text-slate-500">Penjualan Hari Ini</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Rp 18.45M</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">Target hari ini: <span class="text-slate-700 font-semibold">Rp 20.00M (92%)</span></p>
         </div>
-      </section>
-      <section class="dash-in rounded-3xl bg-white/80 p-4 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] ring-1 ring-white/70 backdrop-blur-xl md:p-5" style="animation-delay:.4s">
-        <div class="mb-3 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5">
-            <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100"><i class="fa-solid fa-circle-check text-sm" aria-hidden="true"></i></span>
-            <div>
-              <h3 class="font-bold leading-tight text-slate-800">5 Pembayaran Lunas</h3>
-              <p class="text-[11px] text-slate-400">Transaksi terbaru</p>
+
+        <!-- Card 3: Estimasi Payroll -->
+        <div class="bg-white p-5 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                    💼
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600">Siap Payroll</span>
             </div>
-          </div>
-          <a href="{{ route('transactions.index',['status'=>'lunas']) }}" class="shrink-0 text-[11px] font-semibold text-emerald-600 hover:underline">Lihat semua</a>
+            <p class="text-xs font-medium text-slate-500">Estimasi Payroll Feb</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Rp 684.2M</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">🛡️ 150 Slip terverifikasi BPJS</p>
         </div>
-        <div class="space-y-2 text-sm">
-          @forelse($lunasTerbaru as $t)
-            <div class="flex items-center justify-between gap-2 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 p-3 ring-1 ring-emerald-100/70">
-              <div class="min-w-0">
-                <div class="truncate font-semibold text-slate-800">{{ $t->reseller->nama ?? '-' }}</div>
-                <div class="mt-0.5 text-xs text-slate-500">{{ $t->tanggal->format('d/m/Y') }} &middot; Rp {{ number_format($t->nominal,0,',','.') }}</div>
-              </div>
-              <span class="shrink-0 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm shadow-emerald-500/30">Lunas</span>
+
+        <!-- Card 4: Rata-rata Jam Kerja -->
+        <div class="bg-white p-5 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+            <div class="flex items-center justify-between mb-3">
+                <div class="w-10 h-10 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+                    ⏱️
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-600">Normal</span>
             </div>
-          @empty
-            <p class="py-4 text-center text-sm text-slate-400">Belum ada transaksi lunas</p>
-          @endforelse
+            <p class="text-xs font-medium text-slate-500">Rata-rata Jam Kerja</p>
+            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">7.8 Jam</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">🕒 14 Jam lembur tercatat</p>
         </div>
-      </section>
     </div>
 
-    {{-- QUICK ACTIONS --}}
-    <div class="mt-5 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
-      <a href="{{ route('transactions.create') }}" class="dash-in group relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 p-4 text-center font-semibold text-white shadow-lg shadow-sky-500/25 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2" style="animation-delay:.45s">
-        <span class="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/10" aria-hidden="true"></span>
-        <span class="relative mx-auto mb-2 grid h-9 w-9 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25"><i class="fa-solid fa-plus" aria-hidden="true"></i></span>
-        <span class="relative block text-sm">Jual Voucher</span>
-      </a>
-      <a href="{{ route('presences.bulk') }}" class="dash-in group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 p-4 text-center font-semibold text-white shadow-lg shadow-indigo-500/25 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2" style="animation-delay:.5s">
-        <span class="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/10" aria-hidden="true"></span>
-        <span class="relative mx-auto mb-2 grid h-9 w-9 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i></span>
-        <span class="relative block text-sm">Input Presensi</span>
-      </a>
-      <a href="{{ route('acquisitions.create') }}" class="dash-in group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-4 text-center font-semibold text-white shadow-lg shadow-emerald-500/25 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2" style="animation-delay:.55s">
-        <span class="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/10" aria-hidden="true"></span>
-        <span class="relative mx-auto mb-2 grid h-9 w-9 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25"><i class="fa-solid fa-user-plus" aria-hidden="true"></i></span>
-        <span class="relative block text-sm">Klien Baru</span>
-      </a>
-      <a href="{{ route('payrolls.create') }}" class="dash-in group relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 p-4 text-center font-semibold text-white shadow-lg shadow-amber-500/25 transition duration-300 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2" style="animation-delay:.6s">
-        <span class="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-white/10" aria-hidden="true"></span>
-        <span class="relative mx-auto mb-2 grid h-9 w-9 place-items-center rounded-xl bg-white/15 ring-1 ring-white/25"><i class="fa-solid fa-money-bill-wave" aria-hidden="true"></i></span>
-        <span class="relative block text-sm">Generate Gaji</span>
-      </a>
+    <!-- 3. MAIN DASHBOARD CONTENT (KONTEN UTAMA + SIDEBAR KANAN) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- AREA KIRI / TENGAH (8 KOLOM) -->
+        <div class="lg:col-span-8 space-y-6">
+            <!-- TABEL MONITORING KARYAWAN & PENJUALAN -->
+            <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Monitoring Karyawan & Penjualan</h3>
+                        <p class="text-xs text-slate-500">Status absensi langsung terintegrasi dengan capaian POS per shift</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="text" placeholder="Filter nama/NIK..." class="px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-xs focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Tabs Filter -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button class="px-4 py-1.5 rounded-full bg-blue-600 text-white text-xs font-semibold">Semua Tim (150)</button>
+                    <button class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-xs font-medium transition">Tim Sales & Kasir (48)</button>
+                    <button class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-xs font-medium transition">Operasional Toko (62)</button>
+                    <button class="px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 text-xs font-medium transition">Back-Office (40)</button>
+                </div>
+
+                <!-- Data Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-400 font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="pb-3">KARYAWAN</th>
+                                <th class="pb-3 text-center">JAM MASUK</th>
+                                <th class="pb-3 text-center">STATUS ABSEN</th>
+                                <th class="pb-3">CAPAIAN SALES HARI INI</th>
+                                <th class="pb-3 text-right">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            <!-- Row 1 -->
+                            <tr class="hover:bg-blue-50/30 transition">
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img class="w-9 h-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80" alt="Dimas">
+                                    <div>
+                                        <p class="font-bold text-slate-900">Dimas Pratama</p>
+                                        <p class="text-[11px] text-slate-400">NIK-8821 • Kasir Senior</p>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-center font-medium text-slate-700">07:48 WIB</td>
+                                <td class="py-3.5 text-center">
+                                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">● Tepat Waktu</span>
+                                </td>
+                                <td class="py-3.5">
+                                    <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                                        <span>Rp 4.200.000</span>
+                                        <span class="text-emerald-600">105%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-emerald-500 h-full rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-right text-slate-400 hover:text-slate-600 cursor-pointer font-bold">⋮</td>
+                            </tr>
+                            <!-- Row 2 -->
+                            <tr class="hover:bg-blue-50/30 transition">
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img class="w-9 h-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80" alt="Siti">
+                                    <div>
+                                        <p class="font-bold text-slate-900">Siti Rahma</p>
+                                        <p class="text-[11px] text-slate-400">NIK-8834 • Sales Associate</p>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-center font-medium text-slate-700">07:55 WIB</td>
+                                <td class="py-3.5 text-center">
+                                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-700">● Tepat Waktu</span>
+                                </td>
+                                <td class="py-3.5">
+                                    <div class="flex items-center justify-between text-xs font-semibold mb-1">
+                                        <span>Rp 4.800.000</span>
+                                        <span class="text-blue-600">96%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-blue-600 h-full rounded-full" style="width: 96%"></div>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-right text-slate-400 hover:text-slate-600 cursor-pointer font-bold">⋮</td>
+                            </tr>
+                            <!-- Row 3 -->
+                            <tr class="hover:bg-blue-50/30 transition">
+                                <td class="py-3.5 flex items-center gap-3">
+                                    <img class="w-9 h-9 rounded-full object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80" alt="Budi">
+                                    <div>
+                                        <p class="font-bold text-slate-900">Budi Santoso</p>
+                                        <p class="text-[11px] text-slate-400">NIK-8790 • Inventory SPV</p>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-center font-bold text-rose-600">08:12 WIB</td>
+                                <td class="py-3.5 text-center">
+                                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-700">● Terlambat 12m</span>
+                                </td>
+                                <td class="py-3.5">
+                                    <div class="text-[11px] text-slate-400">Operasional Gudang • 100% Audit</div>
+                                    <div class="w-full bg-purple-100 h-1.5 rounded-full mt-1 overflow-hidden">
+                                        <div class="bg-purple-600 h-full rounded-full" style="width: 100%"></div>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 text-right text-slate-400 hover:text-slate-600 cursor-pointer font-bold">⋮</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Footer Pagination -->
+                <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs text-slate-500">
+                    <span>Menampilkan 5 dari 150 staf terdaftar</span>
+                    <div class="flex gap-2">
+                        <button class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 font-medium">Sebelumnya</button>
+                        <button class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700">Berikutnya</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2 WIDGETS (DISTRIBUSI ABSENSI + AKTIVITAS TERKINI) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Donut Chart Distribusi Absensi -->
+                <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h4 class="font-bold text-slate-900">Distribusi Absensi</h4>
+                            <p class="text-xs text-slate-400">Sesi Kerja Hari Ini</p>
+                        </div>
+                        <span class="text-slate-300">🔄</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center py-3">
+                        <div class="relative w-36 h-36 flex items-center justify-center">
+                            <!-- Visual Ring SVG -->
+                            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <circle cx="18" cy="18" r="15.9155" fill="transparent" stroke="#F1F5F9" stroke-width="3"></circle>
+                                <circle cx="18" cy="18" r="15.9155" fill="transparent" stroke="#10B981" stroke-width="3.5" stroke-dasharray="94.6, 100" stroke-linecap="round"></circle>
+                            </svg>
+                            <div class="absolute text-center">
+                                <span class="text-2xl font-extrabold text-slate-900">150</span>
+                                <p class="text-[10px] text-slate-400 uppercase font-semibold">TOTAL STAF</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-1.5 text-xs pt-2">
+                        <div class="flex justify-between items-center">
+                            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Hadir Tepat Waktu</span>
+                            <span class="font-semibold text-slate-700">142 (94.6%)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Cuti / Izin Sakit</span>
+                            <span class="font-semibold text-slate-700">5 (3.4%)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Terlambat Masuk</span>
+                            <span class="font-semibold text-slate-700">3 (2.0%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Log Aktivitas Terkini -->
+                <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h4 class="font-bold text-slate-900">Aktivitas Terkini</h4>
+                            <p class="text-xs text-slate-400">Log real-time kasir & HR</p>
+                        </div>
+                        <a href="{{ route('transactions.index') }}" class="text-xs text-blue-600 font-semibold hover:underline">Lihat Semua</a>
+                    </div>
+                    <div class="space-y-3.5 text-xs">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">🧾</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-bold text-slate-800">Siti Rahma mencat...</span>
+                                    <span class="text-[10px] text-slate-400">2 mnt lalu</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500">Struk POS #TX-8839 • Rp 450.0...</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">📍</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-bold text-slate-800">Budi Santoso cloc...</span>
+                                    <span class="text-[10px] text-slate-400">15 mnt lalu</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500">Outlet Jakarta Pusat • GPS Akurat</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">📝</div>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span class="font-bold text-slate-800">Lembur disetujui ...</span>
+                                    <span class="text-[10px] text-slate-400">45 mnt lalu</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500">2 Staf Shift Malam disetujui Sarah</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Sinkronisasi POS & Cloud Aktif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AREA KANAN (4 KOLOM) -->
+        <div class="lg:col-span-4 space-y-6">
+            <!-- WIDGET AKSI CEPAT -->
+            <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-bold text-slate-900">Aksi Cepat</h4>
+                    <span class="text-amber-500">⚡</span>
+                </div>
+                <div class="space-y-2.5">
+                    <a href="{{ route('payrolls.create') }}" class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 hover:bg-blue-100/50 transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">💼</div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">Proses Payroll Sekaligus</p>
+                                <p class="text-[10px] text-slate-400">Kalkulasi 150 staf langsung</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </a>
+                    <a href="{{ route('transactions.create') }}" class="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/50 hover:bg-emerald-100/50 transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center">🏪</div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">Buka Kasir / POS Baru</p>
+                                <p class="text-[10px] text-slate-400">Terminal kasir outlet</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </a>
+                    <a href="{{ route('presences.calendar') }}" class="flex items-center justify-between p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100/50 transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center">📥</div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">Ekspor Rekap Absensi</p>
+                                <p class="text-[10px] text-slate-400">Format Excel (.xlsx) / PDF</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </a>
+                    <a href="{{ route('presences.bulk') }}" class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 transition">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-slate-700 text-white flex items-center justify-center">📑</div>
+                            <div>
+                                <p class="text-xs font-bold text-slate-800">Input Izin & Lembur</p>
+                                <p class="text-[10px] text-slate-400">Form pengajuan manual SPV</p>
+                            </div>
+                        </div>
+                        <span class="text-slate-400 text-sm">›</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- GRAFIK WAVE PERFORMA PENJUALAN -->
+            <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                <div class="flex items-center justify-between mb-1">
+                    <p class="text-xs text-slate-400 font-medium">Performa Penjualan</p>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">↑ +18.4%</span>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900 mb-4">Rp 128.85M</h3>
+                <!-- Smooth Wave SVG Chart -->
+                <div class="h-28 w-full">
+                    <svg class="w-full h-full" viewBox="0 0 300 100" fill="none">
+                        <path d="M0 80 Q 50 85, 100 60 T 200 40 T 300 15" stroke="#2563EB" stroke-width="3" fill="none"></path>
+                        <path d="M0 80 Q 50 85, 100 60 T 200 40 T 300 15 L 300 100 L 0 100 Z" fill="url(#blueGradient)" opacity="0.15"></path>
+                        <defs>
+                            <linearGradient id="blueGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#2563EB"/>
+                                <stop offset="100%" stop-color="#2563EB" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="200" cy="40" r="4" fill="#2563EB"></circle>
+                        <circle cx="300" cy="15" r="4" fill="#2563EB"></circle>
+                    </svg>
+                </div>
+                <div class="flex justify-between text-[10px] font-semibold text-slate-400 mt-2">
+                    <span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span class="text-blue-600 font-bold">Min</span>
+                </div>
+            </div>
+
+            <!-- TOP SALES LEADERBOARD -->
+            <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-bold text-slate-900">Top Sales Hari Ini</h4>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700">Live Ranking</span>
+                </div>
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/80">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-extrabold flex items-center justify-center text-xs">1</span>
+                            <div>
+                                <p class="font-bold text-slate-900">Annisa Putri</p>
+                                <p class="text-[10px] text-emerald-600 font-semibold">128% dari target</p>
+                            </div>
+                        </div>
+                        <span class="font-extrabold text-slate-900">Rp 6.4M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/80">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 font-extrabold flex items-center justify-center text-xs">2</span>
+                            <div>
+                                <p class="font-bold text-slate-900">Siti Rahma</p>
+                                <p class="text-[10px] text-blue-600 font-semibold">96% dari target</p>
+                            </div>
+                        </div>
+                        <span class="font-extrabold text-slate-900">Rp 4.8M</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/80">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-700 font-extrabold flex items-center justify-center text-xs">3</span>
+                            <div>
+                                <p class="font-bold text-slate-900">Dimas Pratama</p>
+                                <p class="text-[10px] text-slate-500 font-semibold">84% dari target</p>
+                            </div>
+                        </div>
+                        <span class="font-extrabold text-slate-900">Rp 4.2M</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD TIPS EFISIENSI HR -->
+            <div class="p-6 rounded-3xl bg-blue-50/60 border border-blue-100/70">
+                <div class="flex items-center gap-2 text-blue-700 font-bold text-xs mb-2">
+                    <span>💡</span> Tips Efisiensi HR
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                    Otomatisasi kalkulasi BPJS Ketenagakerjaan & tarif efektif PPh 21 TER 2025 kini aktif. Hindari rekap manual saat penutupan buku akhir bulan.
+                </p>
+                <button class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition">
+                    Pelajari Detail Payroll
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 @endsection
-@push('js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-  var canvas = document.getElementById('salesChart');
-  if(!canvas) return;
-  var labels = @json($chartLabels);
-  var totals = @json($chartTotals);
-  var sum = totals.reduce(function(a,b){ return a + Number(b); }, 0);
-  if(sum === 0) return;
-  var ctx = canvas.getContext('2d');
-  var gradient = ctx.createLinearGradient(0, 0, 0, 260);
-  gradient.addColorStop(0, '#6366f1');
-  gradient.addColorStop(1, '#d946ef');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Penjualan',
-        data: totals,
-        backgroundColor: gradient,
-        borderRadius: 10,
-        borderSkipped: false,
-        barPercentage: 0.5,
-        categoryPercentage: 0.7,
-        hoverBackgroundColor: '#7c3aed'
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#0f172a',
-          titleColor: '#fff',
-          bodyColor: '#e2e8f0',
-          padding: 10,
-          cornerRadius: 10,
-          displayColors: false,
-          callbacks: {
-            label: function(c){ return ' Rp ' + Number(c.parsed.y).toLocaleString('id-ID'); },
-            title: function(items){ return items[0].label; }
-          }
-        }
-      },
-      scales: {
-        x: { grid: { display: false }, border: { display: false }, ticks: { color: '#64748b', font: { size: 11, weight: 500 } } },
-        y: {
-          beginAtZero: true,
-          grid: { color: '#eef2ff' },
-          border: { display: false },
-          ticks: {
-            color: '#64748b', font: { size: 11 }, padding: 8,
-            callback: function(v){
-              if(v >= 1000000) return 'Rp ' + (v/1000000).toLocaleString('id-ID') + ' jt';
-              if(v >= 1000) return 'Rp ' + (v/1000).toLocaleString('id-ID') + ' rb';
-              return 'Rp ' + Number(v).toLocaleString('id-ID');
-            }
-          }
-        }
-      }
-    }
-  });
-});
-</script>
-@endpush
-
-
-
-
-
-
-
