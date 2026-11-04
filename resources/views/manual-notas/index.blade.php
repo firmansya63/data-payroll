@@ -120,12 +120,47 @@
                 @else<span class="text-slate-300">-</span>@endif
               </td>
               <td class="px-3 py-2">
-                <div class="flex flex-wrap justify-center gap-1">
-                  <a href="{{ route('manual-notas.nota',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-600/30 transition hover:brightness-110" title="Cetak A4 Portrait"><i class="fa-solid fa-print text-[11px]" aria-hidden="true"></i></a>
-                  <a href="{{ route('manual-notas.nota-landscape',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition hover:bg-blue-100" title="Cetak A4 Landscape"><i class="fa-solid fa-table-columns text-[11px]" aria-hidden="true"></i></a>
-                  <a href="{{ route('manual-notas.edit',$n) }}" class="grid h-7 w-7 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100" title="Edit"><i class="fa-solid fa-pen text-[11px]" aria-hidden="true"></i></a>
-                  <a href="{{ route('manual-notas.duplicate',$n) }}" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition hover:bg-blue-100" title="Duplikat"><i class="fa-solid fa-copy text-[11px]" aria-hidden="true"></i></a>
-                  <form method="POST" action="{{ route('manual-notas.destroy',$n) }}" onsubmit="return confirm('Hapus nota {{ $n->no_nota }}?')">@csrf @method('DELETE')<button class="grid h-7 w-7 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100" title="Hapus"><i class="fa-solid fa-trash text-[11px]" aria-hidden="true"></i></button></form>
+                <div class="flex items-center justify-center gap-1.5">
+                  <a href="{{ route('manual-notas.nota',$n) }}" target="_blank" rel="noopener" title="Cetak Nota A4 Portrait" aria-label="Cetak Nota A4 Portrait"
+                     class="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-600/30 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+                      <path d="M14 3v5h5M9 13h6M9 17h4"/>
+                    </svg>
+                  </a>
+                  <a href="{{ route('manual-notas.nota-landscape',$n) }}" target="_blank" rel="noopener" title="Cetak Nota A4 Landscape" aria-label="Cetak Nota A4 Landscape"
+                     class="grid h-8 w-8 place-items-center rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
+                      <path d="M8 11h8M8 15h5"/>
+                    </svg>
+                  </a>
+                  <a href="{{ route('manual-notas.edit',$n) }}" title="Edit Nota" aria-label="Edit Nota {{ $n->no_nota }}"
+                     class="grid h-8 w-8 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100 hover:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-1">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 20h9"/>
+                      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>
+                    </svg>
+                  </a>
+                  <a href="{{ route('manual-notas.duplicate',$n) }}" title="Duplikat Nota" aria-label="Duplikat Nota {{ $n->no_nota }}"
+                     class="grid h-8 w-8 place-items-center rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <rect x="9" y="9" width="12" height="12" rx="2"/>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                  </a>
+                  <form method="POST" action="{{ route('manual-notas.destroy',$n) }}" onsubmit="return confirm('Hapus nota {{ $n->no_nota }}?')">
+                    @csrf @method('DELETE')
+                    <button type="submit" title="Hapus Nota" aria-label="Hapus Nota {{ $n->no_nota }}"
+                            class="grid h-8 w-8 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 hover:text-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-1">
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 6h18"/>
+                        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                        <path d="M10 11v6M14 11v6"/>
+                      </svg>
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>
