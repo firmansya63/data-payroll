@@ -402,19 +402,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- CARD TIPS EFISIENSI HR -->
-            <div class="p-6 rounded-3xl bg-blue-50/60 border border-blue-100/70">
-                <div class="flex items-center gap-2 text-blue-700 font-bold text-xs mb-2">
-                    <span>💡</span> Tips Efisiensi HR
-                </div>
-                <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                    Otomatisasi kalkulasi BPJS Ketenagakerjaan & tarif efektif PPh 21 TER 2025 kini aktif. Hindari rekap manual saat penutupan buku akhir bulan.
-                </p>
-                <button class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs transition">
-                    Pelajari Detail Payroll
-                </button>
-            </div>
         </div>
     </div>
 </div>
