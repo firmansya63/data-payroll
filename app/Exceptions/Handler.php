@@ -155,10 +155,10 @@ class Handler extends ExceptionHandler
             .'<meta name="viewport" content="width=device-width, initial-scale=1">'
             .'<title>Koneksi Database Terputus</title></head>'
             .'<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;'
-            .'background:linear-gradient(160deg,#1e1b4b,#2e1065,#4c1d95);color:#fff;'
+            .'background:linear-gradient(160deg,#172554,#1E3A8A,#1E40AF);color:#fff;'
             .'font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding:24px;text-align:center">'
             .'<div><h1 style="font-size:20px;margin:0 0 8px">Koneksi Database Terputus</h1>'
-            .'<p style="margin:0;color:#c7d2fe;font-size:14px;line-height:1.6">Aplikasi tidak dapat terhubung '
+            .'<p style="margin:0;color:#BFDBFE;font-size:14px;line-height:1.6">Aplikasi tidak dapat terhubung '
             .'ke server database. Silakan muat ulang halaman ini beberapa saat lagi.</p></div></body></html>';
 
         return response($html, 503)
