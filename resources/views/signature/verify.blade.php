@@ -62,7 +62,7 @@
         
         <div class="mt-4 pt-3 border-t border-slate-200 space-y-2">
           <p class="text-[11px] text-slate-500">
-            <i class="fa-solid fa-shield-check mr-1 text-emerald-600"></i>
+            <i class="fa-solid fa-shield-halved mr-1 text-emerald-600"></i>
             Setiap slip gaji memiliki signature hash unik yang dihasilkan dari data slip dan kunci rahasia perusahaan.
           </p>
           <p class="text-[11px] text-slate-500">

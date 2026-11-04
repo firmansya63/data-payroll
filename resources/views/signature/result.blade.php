@@ -18,7 +18,7 @@
       <p class="text-sm text-emerald-600 mt-1">Tanda tangan admin terverifikasi dengan benar</p>
       @else
       <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-100 text-red-600 mb-3">
-        <i class="fa-solid fa-times text-2xl"></i>
+        <i class="fa-solid fa-xmark text-2xl"></i>
       </div>
       <h2 class="text-lg font-bold text-red-700">Signature Tidak Valid</h2>
       <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
