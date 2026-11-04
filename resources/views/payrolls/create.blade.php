@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title','Generate Gaji')
 @section('content')
 <h1 class="text-lg font-bold mb-1">Generate Gaji Bulanan</h1>
@@ -16,7 +16,7 @@
 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
 <div class="overflow-x-auto">
 <table class="w-full text-sm">
-<thead class="bg-slate-50 text-xs text-slate-500"><tr><th class="px-2 py-2"><input type="checkbox" id="checkAll" checked></th><th class="px-2 py-2 text-left">Karyawan</th><th class="px-2 py-2 text-right">Pokok</th><th class="px-2 py-2 text-center">Hadir</th><th class="px-2 py-2 text-right">Bonus</th><th class="px-2 py-2 text-right">Insentif</th><th class="px-2 py-2 text-right">Potongan</th><th class="px-2 py-2 text-center bg-violet-50">Lembur <span class="font-normal">(jam / Rp / cat.)</span></th><th class="px-2 py-2 text-right">Terima</th><th class="px-2 py-2">Status</th></tr></thead>
+<thead class="bg-slate-50 text-xs text-slate-500"><tr><th class="px-2 py-2"><input type="checkbox" id="checkAll" checked></th><th class="px-2 py-2 text-left">Karyawan</th><th class="px-2 py-2 text-right">Pokok</th><th class="px-2 py-2 text-center">Hadir</th><th class="px-2 py-2 text-right">Bonus</th><th class="px-2 py-2 text-right">Insentif</th><th class="px-2 py-2 text-right">Potongan</th><th class="px-2 py-2 text-center bg-blue-50">Lembur <span class="font-normal">(jam / Rp / cat.)</span></th><th class="px-2 py-2 text-right">Terima</th><th class="px-2 py-2">Status</th></tr></thead>
 <tbody>
 @foreach($preview as $pr)
 @php $e=$pr['employee']; $rowTerima=$pr['total_terima']; @endphp
@@ -28,13 +28,13 @@
   <td class="px-2 py-2 text-right text-emerald-600 align-top">+Rp {{ number_format($pr['bonus_kehadiran'],0,',','.') }}</td>
   <td class="px-2 py-2 text-right text-sky-600 align-top">+Rp {{ number_format($pr['total_insentif'],0,',','.') }}</td>
   <td class="px-2 py-2 text-right text-red-600 align-top">-Rp {{ number_format($pr['total_potongan'],0,',','.') }}</td>
-  <td class="px-2 py-2 align-top bg-violet-50/40">
+  <td class="px-2 py-2 align-top bg-blue-50/40">
     <div class="flex gap-1 items-center">
       <input type="number" step="0.5" min="0" max="744" name="overtime_jam[{{ $e->id }}]" value="{{ $pr['oJam'] ?? 0 }}" placeholder="jam" class="o-jam border rounded-lg px-2 py-1.5 text-xs w-16" title="Jam lembur">
       <input type="number" step="1000" min="0" max="999999999" name="overtime_nominal[{{ $e->id }}]" value="{{ $pr['oNom'] ?? 0 }}" placeholder="Rp" class="o-nom border rounded-lg px-2 py-1.5 text-xs w-28" title="Nominal lembur Rp">
     </div>
     <input type="text" maxlength="255" name="overtime_catatan[{{ $e->id }}]" value="{{ $pr['oCat'] ?? '' }}" placeholder="catatan lembur (opsional)" class="mt-1 border rounded-lg px-2 py-1.5 text-xs w-full" title="Catatan lembur">
-    <div class="text-[11px] text-violet-600 mt-0.5">+Rp <span class="o-preview">{{ number_format($pr['oNom'] ?? 0,0,',','.') }}</span> @if(($pr['oCat'] ?? '')!=='')<span class="text-slate-500">&mdash; {{ $pr['oCat'] }}</span>@endif</div>
+    <div class="text-[11px] text-blue-600 mt-0.5">+Rp <span class="o-preview">{{ number_format($pr['oNom'] ?? 0,0,',','.') }}</span> @if(($pr['oCat'] ?? '')!=='')<span class="text-slate-500">&mdash; {{ $pr['oCat'] }}</span>@endif</div>
   </td>
   <td class="px-2 py-2 text-right font-bold align-top"><span class="row-terima" data-base="{{ $pr['gaji_pokok']+$pr['bonus_kehadiran']+$pr['total_insentif']-$pr['total_potongan'] }}">Rp {{ number_format($rowTerima,0,',','.') }}</span></td>
   <td class="px-2 py-2 text-center align-top">@if($pr['existing'])<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-xs">Sudah ada</span>@else<span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-full text-xs">Baru</span>@endif</td>

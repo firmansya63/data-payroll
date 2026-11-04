@@ -189,8 +189,8 @@
         'no' => $rowNumber,
         'description' => $lemburDetail,
         'amount' => '+ Rp ' . number_format($payroll->total_lembur,0,',','.'),
-        'class' => 'border-b bg-violet-50/30',
-        'amount_class' => 'font-semibold text-violet-600'
+        'class' => 'border-b bg-blue-50/30',
+        'amount_class' => 'font-semibold text-blue-600'
       ];
       
       $rowNumber++;

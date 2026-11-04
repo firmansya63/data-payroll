@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title','Detail Payroll')
 @section('content')
 <h1 class="text-lg font-bold mb-3">Detail Gaji - {{ $payroll->employee->nama }} ({{ str_pad($payroll->periode_bulan,2,'0',STR_PAD_LEFT) }}/{{ $payroll->periode_tahun }})</h1>
@@ -9,7 +9,7 @@
     <tr class="border-b"><td class="py-2 text-slate-500">Gaji Pokok</td><td class="py-2 text-right font-semibold">Rp {{ number_format($payroll->gaji_pokok,0,',','.') }}</td></tr>
     <tr class="border-b"><td class="py-2 text-slate-500">Kehadiran</td><td class="py-2 text-right">{{ $payroll->jml_hadir }} hadir x Rp {{ number_format($payroll->employee->bonus_per_hadir,0,',','.') }} = <span class="font-semibold text-emerald-600">Rp {{ number_format($payroll->bonus_kehadiran,0,',','.') }}</span></td></tr>
     <tr class="border-b"><td class="py-2 text-slate-500">Insentif Klien Baru ({{ $insentifList->count() }} klien)</td><td class="py-2 text-right font-semibold text-sky-600">Rp {{ number_format($payroll->total_insentif,0,',','.') }}</td></tr>
-    <tr class="border-b bg-violet-50/60"><td class="py-2 text-violet-700">Lembur @if($payroll->jam_lembur>0) ({{ rtrim(rtrim(number_format($payroll->jam_lembur,2,',','.'),'0'),',') }} jam) @endif @if($payroll->catatan_lembur)<span class="text-xs text-slate-500">&mdash; {{ $payroll->catatan_lembur }}</span>@endif</td><td class="py-2 text-right font-semibold text-violet-600">+Rp {{ number_format($payroll->total_lembur,0,',','.') }}</td></tr>
+    <tr class="border-b bg-blue-50/60"><td class="py-2 text-blue-600">Lembur @if($payroll->jam_lembur>0) ({{ rtrim(rtrim(number_format($payroll->jam_lembur,2,',','.'),'0'),',') }} jam) @endif @if($payroll->catatan_lembur)<span class="text-xs text-slate-500">&mdash; {{ $payroll->catatan_lembur }}</span>@endif</td><td class="py-2 text-right font-semibold text-blue-600">+Rp {{ number_format($payroll->total_lembur,0,',','.') }}</td></tr>
     <tr class="border-b"><td class="py-2 text-slate-500">Potongan / Kasbon</td><td class="py-2 text-right font-semibold text-red-600">-Rp {{ number_format($payroll->total_potongan,0,',','.') }}</td></tr>
     <tr class="bg-slate-50 font-bold text-base"><td class="py-3 px-2 rounded-l-xl">Total Terima</td><td class="py-3 px-2 text-right rounded-r-xl text-sky-700">Rp {{ number_format($payroll->total_terima,0,',','.') }}</td></tr>
   </table>
@@ -34,9 +34,9 @@
     @empty <p class="text-sm text-slate-400">Tidak ada potongan</p> @endforelse
   </div>
   @if($payroll->total_lembur>0 || $payroll->catatan_lembur)
-  <div class="bg-white p-4 rounded-2xl shadow-sm border border-violet-200">
-    <h3 class="font-semibold mb-2 text-violet-700">Lembur Periode Ini</h3>
-    <div class="text-sm flex justify-between"><span>{{ $payroll->jam_lembur }} jam @if($payroll->catatan_lembur) &mdash; {{ $payroll->catatan_lembur }} @endif</span><span class="font-semibold text-violet-600">Rp {{ number_format($payroll->total_lembur,0,',','.') }}</span></div>
+  <div class="bg-white p-4 rounded-2xl shadow-sm border border-blue-200">
+    <h3 class="font-semibold mb-2 text-blue-600">Lembur Periode Ini</h3>
+    <div class="text-sm flex justify-between"><span>{{ $payroll->jam_lembur }} jam @if($payroll->catatan_lembur) &mdash; {{ $payroll->catatan_lembur }} @endif</span><span class="font-semibold text-blue-600">Rp {{ number_format($payroll->total_lembur,0,',','.') }}</span></div>
   </div>
   @endif
 </div>

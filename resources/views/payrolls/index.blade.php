@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 @section('title','Payroll')
 @section('content')
 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
@@ -17,7 +17,7 @@
   <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Gaji Pokok</div><div class="font-bold">Rp {{ number_format($summary['total_pokok'],0,',','.') }}</div></div>
   <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Bonus Hadir</div><div class="font-bold text-emerald-600">Rp {{ number_format($summary['total_bonus'],0,',','.') }}</div></div>
   <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Insentif Klien</div><div class="font-bold text-sky-600">Rp {{ number_format($summary['total_insentif'],0,',','.') }}</div></div>
-  <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Lembur</div><div class="font-bold text-violet-600">Rp {{ number_format($summary['total_lembur'],0,',','.') }}</div></div>
+  <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Lembur</div><div class="font-bold text-blue-600">Rp {{ number_format($summary['total_lembur'],0,',','.') }}</div></div>
   <div class="bg-white p-3 rounded-2xl border"><div class="text-xs text-slate-500">Potongan</div><div class="font-bold text-red-600">Rp {{ number_format($summary['total_potongan'],0,',','.') }}</div></div>
 </div>
 <div class="bg-white rounded-2xl shadow-sm border overflow-hidden">
@@ -27,11 +27,11 @@
 <tbody>
 @forelse($payrolls as $p)
 <tr class="border-t">
-  <td class="px-3 py-2.5"><div class="font-semibold">{{ $p->employee->nama }}</div><div class="text-xs text-slate-500">{{ $p->employee->jabatan }} - {{ $p->jml_hadir }} hadir @if($p->jam_lembur>0) | {{ rtrim(rtrim(number_format($p->jam_lembur,2,',','.'),'0'),',') }} jam lembur @endif</div>@if($p->catatan_lembur)<div class="text-[11px] text-violet-600">{{ $p->catatan_lembur }}</div>@endif</td>
+  <td class="px-3 py-2.5"><div class="font-semibold">{{ $p->employee->nama }}</div><div class="text-xs text-slate-500">{{ $p->employee->jabatan }} - {{ $p->jml_hadir }} hadir @if($p->jam_lembur>0) | {{ rtrim(rtrim(number_format($p->jam_lembur,2,',','.'),'0'),',') }} jam lembur @endif</div>@if($p->catatan_lembur)<div class="text-[11px] text-blue-600">{{ $p->catatan_lembur }}</div>@endif</td>
   <td class="px-3 py-2 text-right">Rp {{ number_format($p->gaji_pokok,0,',','.') }}</td>
   <td class="px-3 py-2 text-right text-emerald-600">+Rp {{ number_format($p->bonus_kehadiran,0,',','.') }}</td>
   <td class="px-3 py-2 text-right text-sky-600">+Rp {{ number_format($p->total_insentif,0,',','.') }}</td>
-  <td class="px-3 py-2 text-right text-violet-600">+Rp {{ number_format($p->total_lembur,0,',','.') }}</td>
+  <td class="px-3 py-2 text-right text-blue-600">+Rp {{ number_format($p->total_lembur,0,',','.') }}</td>
   <td class="px-3 py-2 text-right text-red-600">-Rp {{ number_format($p->total_potongan,0,',','.') }}</td>
   <td class="px-3 py-2 text-right font-bold text-slate-800">Rp {{ number_format($p->total_terima,0,',','.') }}</td>
   <td class="px-3 py-2 flex gap-1 justify-center">
@@ -47,7 +47,7 @@
 <div class="p-3 border-t">{{ $payrolls->links() }}</div>
 </div>
 <div class="mt-3 bg-sky-50 border border-sky-200 p-3 rounded-2xl text-xs text-sky-800">
-  <strong>Rumus:</strong> Total Terima = Gaji Pokok + (Jml Hadir x Bonus/Hadir) + Total Insentif Klien Baru + Lembur - Potongan/Kasbon. Insentif hanya dari modul Klien Baru, bukan dari penjualan voucher. <span class="text-violet-700">Lembur diinput manual per periode.</span>
+  <strong>Rumus:</strong> Total Terima = Gaji Pokok + (Jml Hadir x Bonus/Hadir) + Total Insentif Klien Baru + Lembur - Potongan/Kasbon. Insentif hanya dari modul Klien Baru, bukan dari penjualan voucher. <span class="text-blue-600">Lembur diinput manual per periode.</span>
 </div>
 <div class="mt-2 bg-amber-50 border border-amber-200 p-3 rounded-2xl text-xs text-amber-800">
   <i class="fa-solid fa-rotate mr-1"></i> Periode bisa digenerate ulang kapan saja untuk sinkron data presensi/insentif/kasbon & koreksi lembur terbaru &mdash; data akan diupdate, bukan duplikat.
