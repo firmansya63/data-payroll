@@ -52,7 +52,7 @@
         <!-- Card 3: Estimasi Payroll -->
         <div class="bg-white p-5 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
             <div class="flex items-center justify-between mb-3">
-                <div class="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold">
+                <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
                     💼
                 </div>
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600">Siap Payroll</span>
@@ -176,8 +176,8 @@
                                 </td>
                                 <td class="py-3.5">
                                     <div class="text-[11px] text-slate-400">Operasional Gudang • 100% Audit</div>
-                                    <div class="w-full bg-purple-100 h-1.5 rounded-full mt-1 overflow-hidden">
-                                        <div class="bg-purple-600 h-full rounded-full" style="width: 100%"></div>
+                                    <div class="w-full bg-blue-100 h-1.5 rounded-full mt-1 overflow-hidden">
+                                        <div class="bg-blue-600 h-full rounded-full" style="width: 100%"></div>
                                     </div>
                                 </td>
                                 <td class="py-3.5 text-right text-slate-400 hover:text-slate-600 cursor-pointer font-bold">⋮</td>
@@ -226,7 +226,7 @@
                             <span class="font-semibold text-slate-700">142 (94.6%)</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Cuti / Izin Sakit</span>
+                            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Cuti / Izin Sakit</span>
                             <span class="font-semibold text-slate-700">5 (3.4%)</span>
                         </div>
                         <div class="flex justify-between items-center">
@@ -267,7 +267,7 @@
                             </div>
                         </div>
                         <div class="flex items-start gap-3">
-                            <div class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">📝</div>
+                            <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">📝</div>
                             <div class="flex-1">
                                 <div class="flex justify-between">
                                     <span class="font-bold text-slate-800">Lembur disetujui ...</span>
@@ -313,9 +313,9 @@
                         </div>
                         <span class="text-slate-400 text-sm">›</span>
                     </a>
-                    <a href="{{ route('presences.calendar') }}" class="flex items-center justify-between p-3 rounded-2xl bg-purple-50/50 hover:bg-purple-100/50 transition">
+                    <a href="{{ route('presences.calendar') }}" class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 hover:bg-blue-100/50 transition">
                         <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-purple-600 text-white flex items-center justify-center">📥</div>
+                            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">📥</div>
                             <div>
                                 <p class="text-xs font-bold text-slate-800">Ekspor Rekap Absensi</p>
                                 <p class="text-[10px] text-slate-400">Format Excel (.xlsx) / PDF</p>
@@ -372,7 +372,7 @@
                 <div class="space-y-3 text-xs">
                     <div class="flex items-center justify-between p-2.5 rounded-2xl bg-slate-50/80">
                         <div class="flex items-center gap-3">
-                            <span class="w-6 h-6 rounded-full bg-purple-100 text-purple-700 font-extrabold flex items-center justify-center text-xs">1</span>
+                            <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 font-extrabold flex items-center justify-center text-xs">1</span>
                             <div>
                                 <p class="font-bold text-slate-900">Annisa Putri</p>
                                 <p class="text-[10px] text-emerald-600 font-semibold">128% dari target</p>
