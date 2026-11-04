@@ -9,9 +9,9 @@
 <style>*{font-family:Inter,sans-serif} @page{size:A4 portrait; margin:12mm} @media print{.no-print{display:none!important}} *{-webkit-print-color-adjust:exact;print-color-adjust:exact}</style>
 </head>
 <body class="bg-slate-100 p-2 md:p-3">
-<div class="no-print mx-auto mb-3 flex max-w-[720px] flex-wrap items-center gap-2 rounded-2xl bg-white/80 p-2 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl">
-  <button onclick="window.print()" class="inline-flex min-w-[120px] flex-1 items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:brightness-110">Cetak (A4)</button>
-  <a href="{{ route('manual-notas.nota-landscape',$nota) }}" class="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-indigo-600 ring-1 ring-indigo-200 transition hover:bg-indigo-50">↗ A4 Landscape</a>
+<div class="no-print mx-auto mb-3 flex max-w-[720px] flex-wrap items-center gap-2 rounded-2xl bg-white/80 p-2 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl">
+  <button onclick="window.print()" class="inline-flex min-w-[120px] flex-1 items-center justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110">Cetak (A4)</button>
+  <a href="{{ route('manual-notas.nota-landscape',$nota) }}" class="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-blue-600 ring-1 ring-blue-200 transition hover:bg-blue-50">↗ A4 Landscape</a>
   <a href="{{ route('manual-notas.index') }}" class="rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">Kembali</a>
 </div>
 <div class="max-w-[720px] mx-auto bg-white p-5 shadow border print:shadow-none print:p-3">

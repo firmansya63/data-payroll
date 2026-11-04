@@ -10,8 +10,8 @@
 </head>
 <body class="bg-slate-100 p-3 md:p-6">
 <div class="no-print max-w-[460px] mx-auto mb-3 flex gap-2">
-  <button onclick="window.print()" class="flex-1 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 py-2.5 font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:brightness-110">Cetak Nota</button>
-  <a href="{{ route('transactions.rekap', request()->only(['dari','sampai','status','voucher_type'])) }}" class="rounded-xl bg-white px-4 py-2.5 text-sm text-slate-600 ring-1 ring-slate-200 transition hover:bg-indigo-50 hover:text-indigo-600">Kembali</a>
+  <button onclick="window.print()" class="flex-1 rounded-xl bg-blue-600 py-2.5 font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110">Cetak Nota</button>
+  <a href="{{ route('transactions.rekap', request()->only(['dari','sampai','status','voucher_type'])) }}" class="rounded-xl bg-white px-4 py-2.5 text-sm text-slate-600 ring-1 ring-slate-200 transition hover:bg-blue-50 hover:text-blue-600">Kembali</a>
 </div>
 <div class="max-w-[460px] mx-auto bg-white p-4 md:p-5 shadow border print:shadow-none">
   <div class="text-center border-b-2 border-slate-800 pb-3 mb-3">

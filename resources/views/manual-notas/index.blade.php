@@ -3,12 +3,12 @@
 @section('content')
 <div class="relative">
   <div class="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-    <div class="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-indigo-300/40 blur-3xl"></div>
-    <div class="absolute -right-10 top-10 h-80 w-80 rounded-full bg-fuchsia-300/30 blur-3xl"></div>
+    <div class="absolute -left-16 -top-20 h-72 w-72 rounded-full bg-blue-300/40 blur-3xl"></div>
+    <div class="absolute -right-10 top-10 h-80 w-80 rounded-full bg-blue-300/30 blur-3xl"></div>
   </div>
 
   <div class="relative z-10">
-    <div class="vch-in mb-3 overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-4 text-white shadow-[0_18px_45px_-18px_rgba(99,102,241,.65)] md:px-5">
+    <div class="vch-in mb-3 overflow-hidden rounded-3xl bg-blue-600 px-4 py-4 text-white shadow-[0_18px_45px_-18px_rgba(37,99,235,.65)] md:px-5">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white/15 ring-1 ring-white/25 backdrop-blur"><i class="fa-solid fa-receipt text-lg" aria-hidden="true"></i></span>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="vch-in mb-3 grid grid-cols-1 gap-2 sm:grid-cols-3" style="animation-delay:.05s">
-      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl">
+      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl">
         <div class="flex items-center justify-between gap-2">
           <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-rose-500">Piutang (Sisa)</p>
           <span class="grid h-8 w-8 place-items-center rounded-xl bg-rose-50 text-rose-500 ring-1 ring-rose-100"><i class="fa-solid fa-file-invoice-dollar text-xs" aria-hidden="true"></i></span>
@@ -31,7 +31,7 @@
         <p class="mt-1 text-lg font-extrabold tabular-nums text-rose-600">Rp {{ number_format($sumPiutang,0,',','.') }}</p>
         <p class="text-[10px] text-slate-400">Belum Lunas + DP</p>
       </div>
-      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl">
+      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl">
         <div class="flex items-center justify-between gap-2">
           <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-500">DP Masuk</p>
           <span class="grid h-8 w-8 place-items-center rounded-xl bg-amber-50 text-amber-500 ring-1 ring-amber-100"><i class="fa-solid fa-hand-holding-dollar text-xs" aria-hidden="true"></i></span>
@@ -39,7 +39,7 @@
         <p class="mt-1 text-lg font-extrabold tabular-nums text-amber-600">Rp {{ number_format($sumDp,0,',','.') }}</p>
         <p class="text-[10px] text-slate-400">Uang muka diterima</p>
       </div>
-      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl">
+      <div class="rounded-2xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl">
         <div class="flex items-center justify-between gap-2">
           <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-500">Lunas</p>
           <span class="grid h-8 w-8 place-items-center rounded-xl bg-emerald-50 text-emerald-500 ring-1 ring-emerald-100"><i class="fa-solid fa-circle-check text-xs" aria-hidden="true"></i></span>
@@ -49,33 +49,33 @@
       </div>
     </div>
 
-    <form method="GET" class="vch-in mb-3 space-y-2 rounded-3xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl" style="animation-delay:.1s">
+    <form method="GET" class="vch-in mb-3 space-y-2 rounded-3xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl" style="animation-delay:.1s">
       <div class="grid grid-cols-2 gap-2 md:grid-cols-7">
-        <select name="status" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
+        <select name="status" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
           <option value="">Semua Status</option>
           <option value="belum_lunas" {{ request('status')=='belum_lunas'?'selected':'' }}>Belum Lunas</option>
           <option value="dp" {{ request('status')=='dp'?'selected':'' }}>DP</option>
           <option value="lunas" {{ request('status')=='lunas'?'selected':'' }}>Lunas</option>
         </select>
-        <select name="jenis" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
+        <select name="jenis" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
           <option value="">Semua Jenis</option>
           <option value="barang" {{ request('jenis')=='barang'?'selected':'' }}>Barang</option>
           <option value="jasa" {{ request('jenis')=='jasa'?'selected':'' }}>Jasa</option>
           <option value="campuran" {{ request('jenis')=='campuran'?'selected':'' }}>Campuran</option>
         </select>
-        <input type="date" name="dari" value="{{ request('dari') }}" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
-        <input type="date" name="sampai" value="{{ request('sampai') }}" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100">
-        <input name="q" value="{{ request('q') }}" placeholder="No nota / pelanggan" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 md:col-span-2">
-        <button class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2"><i class="fa-solid fa-filter" aria-hidden="true"></i> Filter</button>
+        <input type="date" name="dari" value="{{ request('dari') }}" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
+        <input type="date" name="sampai" value="{{ request('sampai') }}" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
+        <input name="q" value="{{ request('q') }}" placeholder="No nota / pelanggan" class="rounded-xl border border-slate-200 bg-white px-2 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100 md:col-span-2">
+        <button class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"><i class="fa-solid fa-filter" aria-hidden="true"></i> Filter</button>
       </div>
       <div class="flex flex-wrap items-center gap-2">
         <a href="{{ route('manual-notas.index') }}" class="inline-flex items-center gap-1 rounded-lg bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50"><i class="fa-solid fa-rotate-left text-[10px]" aria-hidden="true"></i> Reset</a>
-        @if(request('q') || request('status') || request('jenis'))<span class="rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-semibold text-indigo-600 ring-1 ring-indigo-100">{{ $notas->total() }} nota</span>@endif
+        @if(request('q') || request('status') || request('jenis'))<span class="rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-600 ring-1 ring-blue-100">{{ $notas->total() }} nota</span>@endif
         @if(request('status')=='belum_lunas' || request('status')=='dp')<span class="rounded-full bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-600 ring-1 ring-rose-100">Sisa: Rp {{ number_format($totalPiutangFiltered,0,',','.') }}</span>@endif
       </div>
     </form>
 
-    <div class="vch-in overflow-hidden rounded-3xl bg-white/80 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(79,70,229,.45)] backdrop-blur-xl" style="animation-delay:.15s">
+    <div class="vch-in overflow-hidden rounded-3xl bg-white/80 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl" style="animation-delay:.15s">
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead class="bg-slate-50/80 text-[11px] uppercase tracking-wide text-slate-400">
@@ -93,7 +93,7 @@
           </thead>
           <tbody>
             @forelse($notas as $n)
-            <tr class="border-t border-slate-100 transition hover:bg-indigo-50/40">
+            <tr class="border-t border-slate-100 transition hover:bg-blue-50/40">
               <td class="whitespace-nowrap px-3 py-2.5 text-xs text-slate-500">{{ $n->tanggal->format('d/m/y') }}</td>
               <td class="px-3 py-2">
                 <div class="font-mono text-xs font-bold text-slate-800">{{ $n->no_nota }}</div>
@@ -104,8 +104,8 @@
                 <div class="text-xs text-slate-400">{{ $n->pelanggan_hp ?? '-' }}</div>
               </td>
               <td class="px-3 py-2 text-center">
-                @if($n->jenis=='barang')<span class="rounded-full bg-indigo-50 px-2 py-1 text-[10px] font-bold text-indigo-600 ring-1 ring-indigo-100">BARANG</span>
-                @elseif($n->jenis=='jasa')<span class="rounded-full bg-violet-50 px-2 py-1 text-[10px] font-bold text-violet-600 ring-1 ring-violet-100">JASA</span>
+                @if($n->jenis=='barang')<span class="rounded-full bg-blue-50 px-2 py-1 text-[10px] font-bold text-blue-600 ring-1 ring-blue-100">BARANG</span>
+                @elseif($n->jenis=='jasa')<span class="rounded-full bg-blue-50 px-2 py-1 text-[10px] font-bold text-blue-600 ring-1 ring-blue-100">JASA</span>
                 @else<span class="rounded-full bg-amber-50 px-2 py-1 text-[10px] font-bold text-amber-600 ring-1 ring-amber-100">CAMPURAN</span>@endif
               </td>
               <td class="whitespace-nowrap px-3 py-2 text-right font-bold tabular-nums text-slate-800">Rp {{ number_format($n->total,0,',','.') }}</td>
@@ -121,10 +121,10 @@
               </td>
               <td class="px-3 py-2">
                 <div class="flex flex-wrap justify-center gap-1">
-                  <a href="{{ route('manual-notas.nota',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-sm shadow-indigo-500/30 transition hover:brightness-110" title="Cetak A4 Portrait"><i class="fa-solid fa-print text-[11px]" aria-hidden="true"></i></a>
-                  <a href="{{ route('manual-notas.nota-landscape',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-indigo-50 text-indigo-600 ring-1 ring-indigo-100 transition hover:bg-indigo-100" title="Cetak A4 Landscape"><i class="fa-solid fa-table-columns text-[11px]" aria-hidden="true"></i></a>
+                  <a href="{{ route('manual-notas.nota',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-600/30 transition hover:brightness-110" title="Cetak A4 Portrait"><i class="fa-solid fa-print text-[11px]" aria-hidden="true"></i></a>
+                  <a href="{{ route('manual-notas.nota-landscape',$n) }}" target="_blank" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition hover:bg-blue-100" title="Cetak A4 Landscape"><i class="fa-solid fa-table-columns text-[11px]" aria-hidden="true"></i></a>
                   <a href="{{ route('manual-notas.edit',$n) }}" class="grid h-7 w-7 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100" title="Edit"><i class="fa-solid fa-pen text-[11px]" aria-hidden="true"></i></a>
-                  <a href="{{ route('manual-notas.duplicate',$n) }}" class="grid h-7 w-7 place-items-center rounded-lg bg-violet-50 text-violet-600 ring-1 ring-violet-100 transition hover:bg-violet-100" title="Duplikat"><i class="fa-solid fa-copy text-[11px]" aria-hidden="true"></i></a>
+                  <a href="{{ route('manual-notas.duplicate',$n) }}" class="grid h-7 w-7 place-items-center rounded-lg bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition hover:bg-blue-100" title="Duplikat"><i class="fa-solid fa-copy text-[11px]" aria-hidden="true"></i></a>
                   <form method="POST" action="{{ route('manual-notas.destroy',$n) }}" onsubmit="return confirm('Hapus nota {{ $n->no_nota }}?')">@csrf @method('DELETE')<button class="grid h-7 w-7 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100" title="Hapus"><i class="fa-solid fa-trash text-[11px]" aria-hidden="true"></i></button></form>
                 </div>
               </td>
@@ -133,9 +133,9 @@
             <tr>
               <td colspan="9" class="px-3 py-10">
                 <div class="flex flex-col items-center gap-2 text-center">
-                  <span class="grid h-12 w-12 place-items-center rounded-2xl bg-indigo-50 text-indigo-400 ring-1 ring-indigo-100"><i class="fa-solid fa-receipt" aria-hidden="true"></i></span>
+                  <span class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-blue-600 ring-1 ring-blue-100"><i class="fa-solid fa-receipt" aria-hidden="true"></i></span>
                   <p class="text-sm font-semibold text-slate-500">Belum ada nota.</p>
-                  <a href="{{ route('manual-notas.create') }}" class="text-xs font-semibold text-indigo-600 hover:underline">Buat Nota sekarang</a>
+                  <a href="{{ route('manual-notas.create') }}" class="text-xs font-semibold text-blue-600 hover:underline">Buat Nota sekarang</a>
                 </div>
               </td>
             </tr>
