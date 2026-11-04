@@ -103,13 +103,16 @@
                 @endif
               </td>
               <td class="px-3 py-2.5">
-                <div class="flex items-center justify-center gap-1">
+                <div class="flex items-center justify-center gap-1.5">
                   @if($e->is_active)
-                    <a href="{{ route('presences.create', ['employee_id' => $e->id]) }}" class="grid h-8 w-8 place-items-center rounded-lg bg-blue-50 text-blue-600 ring-1 ring-blue-100 transition hover:bg-blue-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1" title="Absen" aria-label="Absen {{ $e->nama }}"><i class="fa-solid fa-clipboard-user text-xs" aria-hidden="true"></i></a>
+                    <a href="{{ route('presences.create', ['employee_id' => $e->id]) }}" title="Absen" aria-label="Absen {{ $e->nama }}"
+                       class="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-600/30 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1">
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"/><path d="M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2"/><path d="m9 14 2 2 4-4"/></svg>
+                    </a>
                   @endif
-                  <a href="{{ route('employees.edit', $e) }}" class="grid h-8 w-8 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-1" title="Edit" aria-label="Edit {{ $e->nama }}"><i class="fa-solid fa-pen text-xs" aria-hidden="true"></i></a>
+                  <a href="{{ route('employees.edit', $e) }}" title="Edit Karyawan" aria-label="Edit {{ $e->nama }}" class="grid h-8 w-8 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100 hover:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-1"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></a>
                   <form method="POST" action="{{ route('employees.destroy', $e) }}" onsubmit="return confirm('Hapus karyawan ini?')">@csrf @method('DELETE')
-                    <button class="grid h-8 w-8 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-1" title="Hapus" aria-label="Hapus {{ $e->nama }}"><i class="fa-solid fa-trash text-xs" aria-hidden="true"></i></button>
+                    <button type="submit" title="Hapus Karyawan" aria-label="Hapus {{ $e->nama }}" class="grid h-8 w-8 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 hover:text-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-1"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>
                   </form>
                 </div>
               </td>

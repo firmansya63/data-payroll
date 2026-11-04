@@ -82,7 +82,35 @@
       <td class="px-3 py-2">@if($t->voucher_type)<span class="inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-2 py-1 text-xs font-semibold text-white shadow-sm shadow-blue-600/25"><i class="fa-solid fa-tag text-[10px] text-blue-200" aria-hidden="true"></i> {{ $types[$t->voucher_type]['label'] ?? strtoupper($t->voucher_type) }}</span><div class="mt-1 text-xs text-slate-500">{{ $t->qty }} pcs x Rp {{ number_format($t->harga_satuan,0,',','.') }}</div>@else<span class="text-xs text-slate-400">-</span>@endif</td>
       <td class="px-3 py-2 text-right font-bold whitespace-nowrap tabular-nums text-slate-800">Rp {{ number_format($t->nominal,0,',','.') }}</td>
       <td class="px-3 py-2 text-center">@if($t->status=='lunas')<span class="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm shadow-emerald-500/30"><i class="fa-solid fa-check text-[9px]" aria-hidden="true"></i> Lunas</span>@else<span class="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-1 text-[10px] font-bold uppercase tracking-wide text-rose-700 ring-1 ring-rose-200"><i class="fa-solid fa-clock text-[9px]" aria-hidden="true"></i> Belum Lunas</span>@endif</td>
-      <td class="px-3 py-2"><div class="flex flex-wrap justify-center gap-1">@if($t->status=='belum_lunas')<form method="POST" action="{{ route('transactions.lunas',$t) }}" onsubmit="return confirm('Tandai LUNAS?')">@csrf @method('PATCH')<button class="rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-2.5 py-1 text-xs font-semibold text-white shadow-sm shadow-emerald-500/30 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400">Lunaskan</button></form>@endif<a href="{{ route('transactions.nota',$t) }}" target="_blank" title="Cetak nota" class="grid h-7 w-7 place-items-center rounded-lg bg-white text-slate-600 ring-1 ring-slate-200 transition hover:bg-blue-50 hover:text-blue-600"><i class="fa-solid fa-print text-xs" aria-hidden="true"></i></a><a href="{{ route('transactions.edit',$t) }}" title="Edit" class="grid h-7 w-7 place-items-center rounded-lg bg-amber-100 text-amber-700 ring-1 ring-amber-200 transition hover:bg-amber-200"><i class="fa-solid fa-pen text-xs" aria-hidden="true"></i></a><form method="POST" action="{{ route('transactions.destroy',$t) }}" onsubmit="return confirm('Hapus?')">@csrf @method('DELETE')<button title="Hapus" class="grid h-7 w-7 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100"><i class="fa-solid fa-trash text-xs" aria-hidden="true"></i></button></form></div></td>
+      <td class="px-3 py-2">
+        <div class="flex items-center justify-center gap-1.5">
+          @if($t->status=='belum_lunas')
+          <form method="POST" action="{{ route('transactions.lunas',$t) }}" onsubmit="return confirm('Tandai LUNAS?')">
+            @csrf @method('PATCH')
+            <button type="submit" title="Tandai Lunas" aria-label="Tandai Lunas"
+                    class="inline-flex h-8 items-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 text-xs font-semibold text-white shadow-sm shadow-emerald-600/30 transition hover:bg-emerald-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-1">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+              Lunaskan
+            </button>
+          </form>
+          @endif
+          <a href="{{ route('transactions.nota',$t) }}" target="_blank" rel="noopener" title="Cetak Nota" aria-label="Cetak Nota"
+             class="grid h-8 w-8 place-items-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-600/30 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v5"/><path d="M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+          </a>
+          <a href="{{ route('transactions.edit',$t) }}" title="Edit Transaksi" aria-label="Edit Transaksi"
+             class="grid h-8 w-8 place-items-center rounded-lg bg-amber-50 text-amber-600 ring-1 ring-amber-100 transition hover:bg-amber-100 hover:text-amber-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-1">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          </a>
+          <form method="POST" action="{{ route('transactions.destroy',$t) }}" onsubmit="return confirm('Hapus?')">
+            @csrf @method('DELETE')
+            <button type="submit" title="Hapus Transaksi" aria-label="Hapus Transaksi"
+                    class="grid h-8 w-8 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 hover:text-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-1">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+            </button>
+          </form>
+        </div>
+      </td>
     </tr>
     @empty <tr><td colspan="6" class="px-3 py-10 text-center text-sm text-slate-400"><span class="mx-auto mb-2 grid h-11 w-11 place-items-center rounded-2xl bg-blue-50 text-blue-600 ring-1 ring-blue-100"><i class="fa-solid fa-ticket" aria-hidden="true"></i></span>Belum ada transaksi</td></tr> @endforelse
     </tbody>

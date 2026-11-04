@@ -124,7 +124,7 @@ function rowHtml(i,d){
     <td class="px-2 py-1"><input type="number" step="0.01" min="0" name="items[${i}][harga_satuan]" value="${d.harga_satuan??''}" required placeholder="0" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100 harga"></td>
     <td class="px-2 py-1"><input type="number" step="0.01" min="0" name="items[${i}][diskon_item]" value="${d.diskon_item||0}" class="w-full rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100 diskon"></td>
     <td class="px-2 py-1"><div class="text-sm font-bold text-slate-800 sub">Rp 0</div></td>
-    <td class="px-1 py-1"><button type="button" onclick="this.closest('tr').remove();recalc()" class="grid h-7 w-7 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100"><i class="fa-solid fa-xmark text-xs"></i></button></td></tr>`;
+    <td class="px-1 py-1 text-center"><button type="button" onclick="this.closest('tr').remove();recalc()" title="Hapus Baris" aria-label="Hapus Baris" class="grid h-8 w-8 place-items-center rounded-lg bg-rose-50 text-rose-600 ring-1 ring-rose-100 transition hover:bg-rose-100 hover:text-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-1 mx-auto"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button></td></tr>`;
 }
 function render(){
   tbody.innerHTML = initItems.map((d,i)=>rowHtml(i,d)).join('');
