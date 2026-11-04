@@ -19,20 +19,6 @@
             </p>
         </div>
 
-        <!-- Shift Card Info -->
-        <div class="flex items-center gap-4 bg-white p-3.5 px-5 rounded-2xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
-            <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl font-bold">
-                🏪
-            </div>
-            <div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Shift Pagi Berjalan</span>
-                    <span class="px-1.5 py-0.5 text-[10px] font-bold rounded bg-emerald-100 text-emerald-700">Aktif</span>
-                </div>
-                <div class="text-base font-bold text-slate-900">08:00 – 16:30 WIB</div>
-                <div class="text-[11px] text-slate-400">Supervisor: <span class="font-medium text-slate-600">Rian Maulana</span></div>
-            </div>
-        </div>
     </div>
 
     <!-- 2. GRID 4 KPI STATS -->
