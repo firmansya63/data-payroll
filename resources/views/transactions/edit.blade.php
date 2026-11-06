@@ -53,6 +53,38 @@
   </div>
 </div>
 @push('js')
-<script>const sel=document.getElementById('voucher_type'),qty=document.getElementById('qty'),out=document.getElementById('previewNominal'),det=document.getElementById('previewRincian');function upd(){const o=sel.options[sel.selectedIndex];const res=parseInt(o.dataset.reseller);const q=parseInt(qty.value||0);out.textContent='Rp '+(q*res).toLocaleString('id-ID');det.textContent=q+' x '+o.textContent.split(' -')[0]+' @'+res.toLocaleString('id-ID');}sel.addEventListener('change',upd);qty.addEventListener('input',upd);upd();</script>
+<script>
+(function() {
+  const sel = document.getElementById('voucher_type');
+  const qty = document.getElementById('qty');
+  const out = document.getElementById('previewNominal');
+  const det = document.getElementById('previewRincian');
+
+  function parseVal(el) {
+    if (!el) return 0;
+    const v = parseInt(el.value, 10);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+
+  function upd() {
+    if (!sel || !qty) return;
+    const o = sel.options[sel.selectedIndex];
+    if (!o) return;
+    const res = parseInt(o.dataset.reseller, 10) || 0;
+    const q = parseVal(qty);
+    if (out) out.textContent = 'Rp ' + (q * res).toLocaleString('id-ID');
+    if (det) det.textContent = q + ' x ' + o.textContent.split(' -')[0] + ' @' + res.toLocaleString('id-ID');
+  }
+
+  if (sel) sel.addEventListener('change', upd);
+  if (qty) {
+    ['input', 'change', 'keyup'].forEach(function(ev) {
+      qty.addEventListener(ev, upd);
+    });
+  }
+
+  upd();
+})();
+</script>
 @endpush
 @endsection

@@ -52,9 +52,9 @@
   <div class="space-y-2">
     <div class="text-xs font-semibold text-slate-600">Jumlah per Jenis* <span class="font-normal text-slate-400">isi 0 jika tidak beli</span></div>
     <div class="grid grid-cols-3 gap-2">
-      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">3.000 <span class="font-normal text-slate-400">@2.500</span></div><input type="number" name="qty_3k" id="qty_3k" value="{{ old('qty_3k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_3k">Rp 0</div></label>
-      <label class="block rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-2.5 ring-1 ring-amber-100 transition focus-within:ring-2 focus-within:ring-amber-300"><div class="text-xs font-bold text-slate-800">5.000 <span class="font-normal text-amber-600/70">@4.000</span></div><input type="number" name="qty_5k" id="qty_5k" value="{{ old('qty_5k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-amber-600" id="sub_5k">Rp 0</div></label>
-      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">10.000 <span class="font-normal text-slate-400">@9.000</span></div><input type="number" name="qty_10k" id="qty_10k" value="{{ old('qty_10k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_10k">Rp 0</div></label>
+      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">{{ $types['3k']['label'] ?? '3.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['3k']['reseller'] ?? 2500, 0, ',', '.') }}</span></div><input type="number" name="qty_3k" id="qty_3k" value="{{ old('qty_3k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_3k">Rp 0</div></label>
+      <label class="block rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-2.5 ring-1 ring-amber-100 transition focus-within:ring-2 focus-within:ring-amber-300"><div class="text-xs font-bold text-slate-800">{{ $types['5k']['label'] ?? '5.000' }} <span class="font-normal text-amber-600/70">@ {{ number_format($types['5k']['reseller'] ?? 4000, 0, ',', '.') }}</span></div><input type="number" name="qty_5k" id="qty_5k" value="{{ old('qty_5k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-amber-600" id="sub_5k">Rp 0</div></label>
+      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">{{ $types['10k']['label'] ?? '10.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['10k']['reseller'] ?? 9000, 0, ',', '.') }}</span></div><input type="number" name="qty_10k" id="qty_10k" value="{{ old('qty_10k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_10k">Rp 0</div></label>
     </div>
     @error('qty_5k')<div class="rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600 ring-1 ring-rose-100">{{ $message }}</div>@enderror
   </div>
@@ -76,15 +76,72 @@
 </div>
 @push('js')
 <script>
-const q3=document.getElementById('qty_3k'),q5=document.getElementById('qty_5k'),q10=document.getElementById('qty_10k');
-const out=document.getElementById('previewNominal'),det=document.getElementById('previewRincian');
-const s3=document.getElementById('sub_3k'),s5=document.getElementById('sub_5k'),s10=document.getElementById('sub_10k');
-const form=document.getElementById('formVocer');
-function upd(){const a=parseInt(q3.value||0),b=parseInt(q5.value||0),c=parseInt(q10.value||0);const t3=a*2500,t5=b*4000,t10=c*9000;const tot=t3+t5+t10;
-s3.textContent='Rp '+t3.toLocaleString('id-ID');s5.textContent='Rp '+t5.toLocaleString('id-ID');s10.textContent='Rp '+t10.toLocaleString('id-ID');
-out.textContent='Rp '+tot.toLocaleString('id-ID');const parts=[];if(a>0)parts.push(a+'x3K');if(b>0)parts.push(b+'x5K');if(c>0)parts.push(c+'x10K');
-det.textContent=parts.length?parts.join(' + ')+' = Rp '+tot.toLocaleString('id-ID'):'isi jumlah dulu (0 = tidak beli)';}
-[q3,q5,q10].forEach(el=>el.addEventListener('input',upd));form.addEventListener('submit',e=>{if((parseInt(q3.value||0)+parseInt(q5.value||0)+parseInt(q10.value||0))==0){e.preventDefault();alert('Isi minimal 1 jenis vocer (>0). Yang tidak dibeli biarkan 0.');}});upd();
+(function() {
+  const q3 = document.getElementById('qty_3k');
+  const q5 = document.getElementById('qty_5k');
+  const q10 = document.getElementById('qty_10k');
+  const out = document.getElementById('previewNominal');
+  const det = document.getElementById('previewRincian');
+  const s3 = document.getElementById('sub_3k');
+  const s5 = document.getElementById('sub_5k');
+  const s10 = document.getElementById('sub_10k');
+  const form = document.getElementById('formVocer');
+
+  const p3 = {{ (int) ($types['3k']['reseller'] ?? 2500) }};
+  const p5 = {{ (int) ($types['5k']['reseller'] ?? 4000) }};
+  const p10 = {{ (int) ($types['10k']['reseller'] ?? 9000) }};
+
+  function parseVal(el) {
+    if (!el) return 0;
+    const v = parseInt(el.value, 10);
+    return isNaN(v) || v < 0 ? 0 : v;
+  }
+
+  function upd() {
+    const a = parseVal(q3);
+    const b = parseVal(q5);
+    const c = parseVal(q10);
+    const t3 = a * p3;
+    const t5 = b * p5;
+    const t10 = c * p10;
+    const tot = t3 + t5 + t10;
+
+    if (s3) s3.textContent = 'Rp ' + t3.toLocaleString('id-ID');
+    if (s5) s5.textContent = 'Rp ' + t5.toLocaleString('id-ID');
+    if (s10) s10.textContent = 'Rp ' + t10.toLocaleString('id-ID');
+    if (out) out.textContent = 'Rp ' + tot.toLocaleString('id-ID');
+
+    const parts = [];
+    if (a > 0) parts.push(a + 'x 3K');
+    if (b > 0) parts.push(b + 'x 5K');
+    if (c > 0) parts.push(c + 'x 10K');
+
+    if (det) {
+      det.textContent = parts.length
+        ? parts.join(' + ') + ' = Rp ' + tot.toLocaleString('id-ID')
+        : 'isi jumlah dulu (0 = tidak beli)';
+    }
+  }
+
+  [q3, q5, q10].forEach(function(el) {
+    if (!el) return;
+    ['input', 'change', 'keyup'].forEach(function(ev) {
+      el.addEventListener(ev, upd);
+    });
+  });
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      const totalQty = parseVal(q3) + parseVal(q5) + parseVal(q10);
+      if (totalQty === 0) {
+        e.preventDefault();
+        alert('Isi minimal 1 jenis vocer (>0). Yang tidak dibeli biarkan 0.');
+      }
+    });
+  }
+
+  upd();
+})();
 </script>
 @endpush
 @endsection

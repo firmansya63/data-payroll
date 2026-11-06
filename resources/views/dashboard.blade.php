@@ -5,15 +5,7 @@
     <!-- 1. HERO HEADER GREETING -->
     <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2 mb-2">
-                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-blue-100 text-blue-700">
-                    JAKARTA CENTRAL STORE #01
-                </span>
-                <span class="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live System
-                </span>
-            </div>
-            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Pagi, Sarah 👋</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Pagi, {{ auth()->user()->name ?? 'User' }} 👋</h2>
             <p class="text-sm text-slate-500 mt-1">
                 Ringkasan operasional tim hari ini: <span class="font-semibold text-slate-700">94.6%</span> karyawan hadir tepat waktu & target penjualan ritel berjalan optimal.
             </p>
@@ -273,7 +265,7 @@
                                     <span class="font-bold text-slate-800">Lembur disetujui ...</span>
                                     <span class="text-[10px] text-slate-400">45 mnt lalu</span>
                                 </div>
-                                <p class="text-[11px] text-slate-500">2 Staf Shift Malam disetujui Sarah</p>
+                                <p class="text-[11px] text-slate-500">2 Staf Shift Malam disetujui {{ auth()->user()->name ?? 'Supervisor' }}</p>
                             </div>
                         </div>
                     </div>
