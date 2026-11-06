@@ -76,15 +76,20 @@
         ->map(fn (string $w): string => mb_strtoupper(mb_substr($w, 0, 1)))
         ->implode('') ?: 'U';
 @endphp
-<aside class="sticky top-0 flex h-screen w-60 shrink-0 flex-col justify-between overflow-y-auto border-r border-slate-100 bg-white p-5 lg:w-72 lg:p-6">
+<aside id="sidebar" class="fixed inset-y-0 left-0 z-40 flex h-screen w-64 shrink-0 flex-col justify-between overflow-y-auto border-r border-slate-100 bg-white p-5 lg:w-72 lg:p-6 -translate-x-full lg:translate-x-0 lg:sticky transition-transform duration-300 shadow-2xl lg:shadow-none">
     <div>
-        <!-- Logo Brand -->
-        <div class="mb-8 flex items-center gap-3 px-2 py-1">
-            <img src="{{ asset('logo-datanet.png') }}" alt="Logo Datanet" class="h-11 w-11 rounded-xl bg-white object-contain shadow-md shadow-blue-500/10">
-            <div class="min-w-0">
-                <h1 class="truncate font-bold leading-tight text-slate-900">DATANET</h1>
-                <p class="truncate text-[11px] font-semibold uppercase tracking-wider text-slate-400">HR &amp; Retail Core</p>
+        <!-- Logo Brand & Mobile Close -->
+        <div class="mb-8 flex items-center justify-between gap-3 px-2 py-1">
+            <div class="flex items-center gap-3 min-w-0">
+                <img src="{{ asset('logo-datanet.png') }}" alt="Logo Datanet" class="h-11 w-11 rounded-xl bg-white object-contain shadow-md shadow-blue-500/10 shrink-0">
+                <div class="min-w-0">
+                    <h1 class="truncate font-bold leading-tight text-slate-900">DATANET</h1>
+                    <p class="truncate text-[11px] font-semibold uppercase tracking-wider text-slate-400">HR &amp; Retail Core</p>
+                </div>
             </div>
+            <button type="button" id="closeSidebar" class="lg:hidden grid h-9 w-9 shrink-0 place-items-center rounded-xl text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition" aria-label="Tutup Menu">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
         </div>
 
         <!-- Menu Navigasi (dikelompokkan per kategori) -->

@@ -23,20 +23,21 @@
 </div>
 <p class="mb-3 text-[11px] text-slate-400">1 baris = 1 reseller (agregat semua jenis vocer). Multi-vocer 3 jenis dalam 1 tanggal tetap terjumlah ke 1 baris reseller.</p>
 <form method="GET" class="no-print vch-in mb-3 rounded-3xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl md:p-4" style="animation-delay:.05s">
-  <div class="grid grid-cols-2 gap-2 md:grid-cols-7">
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2">
     <input type="date" name="dari" value="{{ request('dari') }}" class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
     <input type="date" name="sampai" value="{{ request('sampai') }}" class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
     <select name="status" class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"><option value="">Semua Status</option><option value="belum_lunas" {{ request('status')=='belum_lunas'?'selected':'' }}>Belum Lunas</option><option value="lunas" {{ request('status')=='lunas'?'selected':'' }}>Lunas</option></select>
     <select name="voucher_type" class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"><option value="">Semua Vocer</option>@foreach($types as $k=>$t)<option value="{{ $k }}" {{ request('voucher_type')==$k?'selected':'' }}>{{ $t['label'] }}</option>@endforeach</select>
     <select name="reseller_id" class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"><option value="">Semua Reseller</option>@foreach($resellers as $r)<option value="{{ $r->id }}" {{ request('reseller_id')==$r->id?'selected':'' }}>{{ $r->nama }}</option>@endforeach</select>
     <input name="q" value="{{ request('q') }}" placeholder="Cari reseller..." class="w-full rounded-xl border border-slate-200 bg-white px-2.5 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100">
-    <button class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2">Filter</button>
+    <button class="w-full rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2">Filter</button>
   </div>
   <div class="mt-2 flex flex-wrap items-center gap-2 text-xs"><a href="{{ route('transactions.rekap') }}" class="inline-flex items-center gap-1 rounded-lg bg-white px-3 py-1.5 font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-blue-50 hover:text-blue-600"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset</a><span class="rounded-full bg-blue-50 px-2.5 py-1 font-semibold text-blue-600 ring-1 ring-blue-100">{{ $rows->count() }} reseller</span><span class="hidden text-slate-400 md:inline">3K:2.500 | 5K:4.000 | 10K:9.000</span></div>
 </form>
 <div class="vch-in overflow-hidden rounded-3xl bg-white/80 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl print:bg-white print:shadow-none print:ring-0" style="animation-delay:.1s">
+<div class="md:hidden flex items-center gap-1.5 px-3 py-2 text-[11px] text-blue-600 bg-blue-50/70 border-b border-blue-100"><i class="fa-solid fa-arrows-left-right text-xs" aria-hidden="true"></i> <span>Geser tabel ke samping untuk melihat semua kolom</span></div>
 <div class="overflow-x-auto">
-<table class="w-full text-sm">
+<table class="w-full min-w-[700px] text-sm">
 <thead class="bg-slate-50/80 text-[11px] uppercase tracking-wide text-slate-400"><tr>
 <th class="w-8 px-2 py-2.5 text-center">No</th>
 <th class="px-3 py-2.5 text-left">Reseller</th>

@@ -15,8 +15,8 @@
       </div>
     </div>
 
-    <div class="grid max-w-4xl gap-4 md:grid-cols-3">
-      <div class="vch-in h-fit rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl" style="animation-delay:.05s">
+    <div class="flex flex-col md:grid md:grid-cols-3 max-w-4xl gap-4">
+      <div class="vch-in order-2 md:order-1 h-fit rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl" style="animation-delay:.05s">
         <div class="mb-3 flex items-center gap-2.5">
           <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-blue-600 text-white shadow-lg shadow-blue-600/30"><i class="fa-solid fa-tags text-sm" aria-hidden="true"></i></span>
           <div>
@@ -45,16 +45,34 @@
         </div>
       </div>
 
-  <form method="POST" action="{{ route('transactions.store') }}" id="formVocer" class="vch-in space-y-3 rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl md:col-span-2 md:p-5" style="animation-delay:.1s">
+  <form method="POST" action="{{ route('transactions.store') }}" id="formVocer" class="vch-in order-1 md:order-2 space-y-3 rounded-3xl bg-white/80 p-4 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl md:col-span-2 md:p-5" style="animation-delay:.1s">
   @csrf
   <label class="block text-sm font-medium text-slate-700">Reseller* <select name="reseller_id" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"><option value="">-- Pilih Reseller --</option>@foreach($resellers as $r)<option value="{{ $r->id }}" {{ old('reseller_id')==$r->id?'selected':'' }}>{{ $r->nama }} @if($r->no_hp) - {{ $r->no_hp }} @endif</option>@endforeach</select> <a href="{{ route('resellers.create') }}" class="text-xs font-semibold text-blue-600 hover:underline">+ Tambah reseller</a></label>
 
   <div class="space-y-2">
     <div class="text-xs font-semibold text-slate-600">Jumlah per Jenis* <span class="font-normal text-slate-400">isi 0 jika tidak beli</span></div>
-    <div class="grid grid-cols-3 gap-2">
-      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">{{ $types['3k']['label'] ?? '3.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['3k']['reseller'] ?? 2500, 0, ',', '.') }}</span></div><input type="number" name="qty_3k" id="qty_3k" value="{{ old('qty_3k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_3k">Rp 0</div></label>
-      <label class="block rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-2.5 ring-1 ring-amber-100 transition focus-within:ring-2 focus-within:ring-amber-300"><div class="text-xs font-bold text-slate-800">{{ $types['5k']['label'] ?? '5.000' }} <span class="font-normal text-amber-600/70">@ {{ number_format($types['5k']['reseller'] ?? 4000, 0, ',', '.') }}</span></div><input type="number" name="qty_5k" id="qty_5k" value="{{ old('qty_5k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-amber-600" id="sub_5k">Rp 0</div></label>
-      <label class="block rounded-2xl bg-slate-50/80 p-2.5 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200"><div class="text-xs font-bold text-slate-800">{{ $types['10k']['label'] ?? '10.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['10k']['reseller'] ?? 9000, 0, ',', '.') }}</span></div><input type="number" name="qty_10k" id="qty_10k" value="{{ old('qty_10k',0) }}" min="0" max="10000" class="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0"><div class="mt-1 text-[11px] font-semibold tabular-nums text-blue-600" id="sub_10k">Rp 0</div></label>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+      <label class="block rounded-2xl bg-slate-50/80 p-3 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200">
+        <div class="flex items-center justify-between gap-1">
+          <div class="text-xs font-bold text-slate-800">{{ $types['3k']['label'] ?? '3.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['3k']['reseller'] ?? 2500, 0, ',', '.') }}</span></div>
+          <div class="text-[11px] font-semibold tabular-nums text-blue-600" id="sub_3k">Rp 0</div>
+        </div>
+        <input type="number" name="qty_3k" id="qty_3k" value="{{ old('qty_3k',0) }}" min="0" max="10000" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0">
+      </label>
+      <label class="block rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 p-3 ring-1 ring-amber-100 transition focus-within:ring-2 focus-within:ring-amber-300">
+        <div class="flex items-center justify-between gap-1">
+          <div class="text-xs font-bold text-slate-800">{{ $types['5k']['label'] ?? '5.000' }} <span class="font-normal text-amber-600/70">@ {{ number_format($types['5k']['reseller'] ?? 4000, 0, ',', '.') }}</span></div>
+          <div class="text-[11px] font-semibold tabular-nums text-amber-600" id="sub_5k">Rp 0</div>
+        </div>
+        <input type="number" name="qty_5k" id="qty_5k" value="{{ old('qty_5k',0) }}" min="0" max="10000" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-100" placeholder="0">
+      </label>
+      <label class="block rounded-2xl bg-slate-50/80 p-3 ring-1 ring-slate-100 transition focus-within:ring-2 focus-within:ring-blue-200">
+        <div class="flex items-center justify-between gap-1">
+          <div class="text-xs font-bold text-slate-800">{{ $types['10k']['label'] ?? '10.000' }} <span class="font-normal text-slate-400">@ {{ number_format($types['10k']['reseller'] ?? 9000, 0, ',', '.') }}</span></div>
+          <div class="text-[11px] font-semibold tabular-nums text-blue-600" id="sub_10k">Rp 0</div>
+        </div>
+        <input type="number" name="qty_10k" id="qty_10k" value="{{ old('qty_10k',0) }}" min="0" max="10000" class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold tabular-nums text-slate-800 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="0">
+      </label>
     </div>
     @error('qty_5k')<div class="rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600 ring-1 ring-rose-100">{{ $message }}</div>@enderror
   </div>
@@ -63,13 +81,13 @@
   <label class="block text-sm font-medium text-slate-700">Tanggal*<input type="date" name="tanggal" value="{{ old('tanggal', date('Y-m-d')) }}" required class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100"></label>
 
   <label class="block text-sm font-medium text-slate-700">Status Pembayaran*
-    <div class="mt-1 flex gap-3">
-      <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 transition has-[:checked]:border-emerald-300 has-[:checked]:bg-emerald-50 has-[:checked]:ring-2 has-[:checked]:ring-emerald-200"><input type="radio" name="status" value="lunas" {{ old('status')=='lunas'?'checked':'' }} required class="accent-emerald-600"> <span class="text-sm font-semibold text-emerald-700">Lunas</span></label>
-      <label class="flex flex-1 cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 transition has-[:checked]:border-rose-300 has-[:checked]:bg-rose-50 has-[:checked]:ring-2 has-[:checked]:ring-rose-200"><input type="radio" name="status" value="belum_lunas" {{ old('status','belum_lunas')=='belum_lunas'?'checked':'' }} required class="accent-rose-600"> <span class="text-sm font-semibold text-rose-700">Belum Lunas</span></label>
+    <div class="mt-1 grid grid-cols-2 gap-2 sm:gap-3">
+      <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 transition has-[:checked]:border-emerald-300 has-[:checked]:bg-emerald-50 has-[:checked]:ring-2 has-[:checked]:ring-emerald-200"><input type="radio" name="status" value="lunas" {{ old('status')=='lunas'?'checked':'' }} required class="accent-emerald-600"> <span class="text-xs sm:text-sm font-semibold text-emerald-700">Lunas</span></label>
+      <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 transition has-[:checked]:border-rose-300 has-[:checked]:bg-rose-50 has-[:checked]:ring-2 has-[:checked]:ring-rose-200"><input type="radio" name="status" value="belum_lunas" {{ old('status','belum_lunas')=='belum_lunas'?'checked':'' }} required class="accent-rose-600"> <span class="text-xs sm:text-sm font-semibold text-rose-700">Belum Lunas</span></label>
     </div>
   </label>
   <label class="block text-sm font-medium text-slate-700">Keterangan<textarea name="keterangan" rows="2" class="mt-1 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 placeholder:text-slate-400 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-100" placeholder="Otomatis: mis 10 voucher 5.000">{{ old('keterangan') }}</textarea></label>
-  <div class="flex gap-2 pt-1"><button class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2">Simpan</button><a href="{{ route('transactions.index') }}" class="rounded-xl bg-white px-6 py-2.5 text-sm font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-blue-50 hover:text-blue-600">Batal</a></div>
+  <div class="flex flex-col sm:flex-row gap-2 pt-1"><button class="w-full sm:w-auto rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2">Simpan</button><a href="{{ route('transactions.index') }}" class="w-full sm:w-auto text-center rounded-xl bg-white px-6 py-2.5 text-sm font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-blue-50 hover:text-blue-600">Batal</a></div>
   </form>
     </div>
   </div>
