@@ -55,12 +55,39 @@
   </div>
   @if($details->isNotEmpty())
   <div class="border rounded-xl overflow-hidden mb-3">
-    <div class="bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600">Rincian Transaksi ({{ $details->count() }})</div>
+    <div class="bg-slate-50 px-3 py-2 text-xs font-semibold text-slate-600 flex justify-between">
+      <span>Rekap Total Transaksi per Tanggal</span>
+      <span>{{ $details->count() }} Hari</span>
+    </div>
     <table class="w-full text-[11px]">
-      <thead class="bg-slate-50 text-slate-500"><tr><th class="px-2 py-1.5 text-left">Tgl</th><th class="px-2 py-1.5 text-left">Vocer</th><th class="px-2 py-1.5 text-right">Nominal</th><th class="px-2 py-1.5 text-center">Status</th></tr></thead>
+      <thead class="bg-slate-50 text-slate-500">
+        <tr>
+          <th class="px-2 py-1.5 text-left">Tanggal</th>
+          <th class="px-2 py-1.5 text-center">3k</th>
+          <th class="px-2 py-1.5 text-center">5k</th>
+          <th class="px-2 py-1.5 text-center">10k</th>
+          <th class="px-2 py-1.5 text-right">Total Nom.</th>
+          <th class="px-2 py-1.5 text-center">Status</th>
+        </tr>
+      </thead>
       <tbody>
         @foreach($details as $d)
-        <tr class="border-t"><td class="px-2 py-1.5 whitespace-nowrap">{{ $d->tanggal->format('d/m/y') }}</td><td class="px-2 py-1.5">{{ $types[$d->voucher_type]['label'] ?? $d->voucher_type }} · {{ $d->qty }}pcs</td><td class="px-2 py-1.5 text-right">Rp {{ number_format($d->nominal,0,',','.') }}</td><td class="px-2 py-1.5 text-center">@if($d->status=='lunas')<span class="bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded text-[10px] font-bold">LUNAS</span>@else<span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[10px] font-bold">BELUM</span>@endif</td></tr>
+        <tr class="border-t">
+          <td class="px-2 py-1.5 whitespace-nowrap font-medium">{{ $d->tanggal->format('d/m/y') }}</td>
+          <td class="px-2 py-1.5 text-center {{ $d->qty_3k == 0 ? 'text-slate-300' : '' }}">{{ $d->qty_3k ?: '-' }}</td>
+          <td class="px-2 py-1.5 text-center {{ $d->qty_5k == 0 ? 'text-slate-300' : '' }}">{{ $d->qty_5k ?: '-' }}</td>
+          <td class="px-2 py-1.5 text-center {{ $d->qty_10k == 0 ? 'text-slate-300' : '' }}">{{ $d->qty_10k ?: '-' }}</td>
+          <td class="px-2 py-1.5 text-right font-semibold">Rp {{ number_format($d->nominal,0,',','.') }}</td>
+          <td class="px-2 py-1.5 text-center">
+            @if($d->is_all_lunas)
+              <span class="bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded text-[10px] font-bold">LUNAS</span>
+            @elseif($d->is_all_belum)
+              <span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[10px] font-bold">BELUM</span>
+            @else
+              <span class="bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded text-[10px] font-bold" title="Campuran (Lunas & Belum)">CAMPUR</span>
+            @endif
+          </td>
+        </tr>
         @endforeach
       </tbody>
     </table>

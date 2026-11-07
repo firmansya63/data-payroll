@@ -175,8 +175,26 @@ class VoucherTransactionController extends Controller
         if($r->sampai) $q->whereDate('tanggal','<=',$r->sampai);
         if($r->status && in_array($r->status,['lunas','belum_lunas'])) $q->where('status',$r->status);
         if($r->voucher_type && isset($types[$r->voucher_type])) $q->where('voucher_type',$r->voucher_type);
+        
         $aggr = (clone $q)->selectRaw("COUNT(*) as trx_count, SUM(qty) as total_qty, SUM(CASE WHEN voucher_type='3k' THEN qty ELSE 0 END) as qty_3k, SUM(CASE WHEN voucher_type='5k' THEN qty ELSE 0 END) as qty_5k, SUM(CASE WHEN voucher_type='10k' THEN qty ELSE 0 END) as qty_10k, SUM(nominal) as total_nominal, SUM(CASE WHEN status='belum_lunas' THEN nominal ELSE 0 END) as piutang, SUM(CASE WHEN status='lunas' THEN nominal ELSE 0 END) as lunas")->first();
-        $details = (clone $q)->orderBy('tanggal')->orderBy('id')->get();
+        
+        // Group transactions by date (tanggal)
+        $rawDetails = (clone $q)->orderBy('tanggal')->orderBy('id')->get();
+        $details = $rawDetails->groupBy(fn($item) => $item->tanggal->format('Y-m-d'))->map(function($group, $date) {
+            return (object)[
+                'tanggal' => \Carbon\Carbon::parse($date),
+                'trx_count' => $group->count(),
+                'qty_3k' => $group->where('voucher_type', '3k')->sum('qty'),
+                'qty_5k' => $group->where('voucher_type', '5k')->sum('qty'),
+                'qty_10k' => $group->where('voucher_type', '10k')->sum('qty'),
+                'total_qty' => $group->sum('qty'),
+                'nominal' => $group->sum('nominal'),
+                'statuses' => $group->pluck('status')->unique(),
+                'is_all_lunas' => $group->every(fn($i) => $i->status == 'lunas'),
+                'is_all_belum' => $group->every(fn($i) => $i->status == 'belum_lunas'),
+            ];
+        })->values();
+
         $periode = null;
         if($r->dari || $r->sampai) $periode = trim(($r->dari ?: 'awal').' s/d '.($r->sampai ?: now()->format('Y-m-d')));
         return view('transactions.nota-rekap', compact('reseller','aggr','details','types','periode'));
