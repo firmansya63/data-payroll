@@ -262,56 +262,6 @@
 
         <!-- AREA KANAN (4 KOLOM) -->
         <div class="lg:col-span-4 space-y-6">
-            <!-- WIDGET AKSI CEPAT -->
-            <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
-                <div class="flex items-center justify-between mb-4">
-                    <h4 class="font-bold text-slate-900">Aksi Cepat</h4>
-                    <span class="text-amber-500">⚡</span>
-                </div>
-                <div class="space-y-2.5">
-                    <a href="{{ route('payrolls.create') }}" class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 hover:bg-blue-100/50 transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">💼</div>
-                            <div>
-                                <p class="text-xs font-bold text-slate-800">Proses Payroll Sekaligus</p>
-                                <p class="text-[10px] text-slate-400">Kalkulasi {{ $karyawanAktif }} staf langsung</p>
-                            </div>
-                        </div>
-                        <span class="text-slate-400 text-sm">›</span>
-                    </a>
-                    <a href="{{ route('transactions.create') }}" class="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/50 hover:bg-emerald-100/50 transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center">🏪</div>
-                            <div>
-                                <p class="text-xs font-bold text-slate-800">Input Penjualan Voucher</p>
-                                <p class="text-[10px] text-slate-400">Catat transaksi reseller baru</p>
-                            </div>
-                        </div>
-                        <span class="text-slate-400 text-sm">›</span>
-                    </a>
-                    <a href="{{ route('presences.calendar') }}" class="flex items-center justify-between p-3 rounded-2xl bg-blue-50/50 hover:bg-blue-100/50 transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center">📥</div>
-                            <div>
-                                <p class="text-xs font-bold text-slate-800">Kalender Absensi Tim</p>
-                                <p class="text-[10px] text-slate-400">Rekap bulanan per karyawan</p>
-                            </div>
-                        </div>
-                        <span class="text-slate-400 text-sm">›</span>
-                    </a>
-                    <a href="{{ route('presences.bulk') }}" class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-9 h-9 rounded-xl bg-slate-700 text-white flex items-center justify-center">📑</div>
-                            <div>
-                                <p class="text-xs font-bold text-slate-800">Presensi Harian Sekaligus</p>
-                                <p class="text-[10px] text-slate-400">Bulk input presensi seluruh tim</p>
-                            </div>
-                        </div>
-                        <span class="text-slate-400 text-sm">›</span>
-                    </a>
-                </div>
-            </div>
-
             <!-- GRAFIK PENJUALAN 6 BULAN TERAKHIR -->
             <div class="bg-white p-6 rounded-3xl border border-blue-50/80 shadow-[0_10px_25px_-5px_rgba(203,219,245,0.45)]">
                 <div class="flex items-center justify-between mb-4">
