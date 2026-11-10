@@ -25,7 +25,7 @@
                 </span>
             </div>
             <p class="text-xs font-medium text-slate-500">Karyawan Hadir Hari Ini</p>
-            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">{{ $hadirHariIni }} <span class="text-sm font-normal text-slate-400">/ {{ $karyawanAktif }} Staf</span></h3>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">{{ $hadirHariIni }} <span class="text-xs font-normal text-slate-400">/ {{ $karyawanAktif }} Staf</span></h3>
             <p class="text-[11px] text-emerald-600 font-medium mt-1">{{ $attendanceRatio }}% rasio kehadiran tim</p>
         </div>
 
@@ -38,8 +38,8 @@
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600">Hari Ini</span>
             </div>
             <p class="text-xs font-medium text-slate-500">Penjualan Hari Ini</p>
-            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Rp {{ number_format($penjualanHariIni, 0, ',', '.') }}</h3>
-            <p class="text-[11px] text-slate-400 font-medium mt-1">Total lunas: <span class="text-slate-700 font-semibold">Rp {{ number_format($totalLunas, 0, ',', '.') }}</span></p>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">{{ \App\Helpers\FormatHelper::rupiahSingkat($penjualanHariIni) }}</h3>
+            <p class="text-[11px] text-slate-400 font-medium mt-1">Total lunas: <span class="text-slate-700 font-semibold">{{ \App\Helpers\FormatHelper::rupiahSingkat($totalLunas) }}</span></p>
         </div>
 
         <!-- Card 3: Estimasi Payroll -->
@@ -51,7 +51,7 @@
                 <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600">Bulan Ini</span>
             </div>
             <p class="text-xs font-medium text-slate-500">Estimasi Payroll {{ now()->translatedFormat('M') }}</p>
-            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Rp {{ number_format($estimasiPayrollBulanIni, 0, ',', '.') }}</h3>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">{{ \App\Helpers\FormatHelper::rupiahSingkat($estimasiPayrollBulanIni) }}</h3>
             <p class="text-[11px] text-slate-400 font-medium mt-1">🛡️ {{ $karyawanAktif }} Staf aktif terdaftar</p>
         </div>
 
@@ -66,7 +66,7 @@
                 </span>
             </div>
             <p class="text-xs font-medium text-slate-500">Total Piutang Belum Lunas</p>
-            <h3 class="text-2xl font-extrabold text-slate-900 mt-1">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</h3>
+            <h3 class="text-xl font-extrabold text-slate-900 mt-1">{{ \App\Helpers\FormatHelper::rupiahSingkat($totalPiutang) }}</h3>
             <p class="text-[11px] text-slate-400 font-medium mt-1">🕒 {{ $transaksiBulanIni }} transaksi bulan ini</p>
         </div>
     </div>
@@ -151,7 +151,7 @@
                                 </td>
                                 <td class="py-3.5">
                                     <div class="flex items-center justify-between text-xs font-semibold mb-1">
-                                        <span>Rp {{ number_format($emp->insentif_bulan_ini, 0, ',', '.') }}</span>
+                                        <span>{{ \App\Helpers\FormatHelper::rupiahSingkat($emp->insentif_bulan_ini) }}</span>
                                         <span class="text-blue-600 font-bold">{{ $emp->klien_bulan_ini }} Klien</span>
                                     </div>
                                     <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
@@ -244,7 +244,7 @@
                                     <span class="font-bold text-slate-800 truncate">{{ $tx->reseller->nama ?? 'Reseller' }}</span>
                                     <span class="text-[10px] text-slate-400">{{ \Carbon\Carbon::parse($tx->tanggal)->diffForHumans() }}</span>
                                 </div>
-                                <p class="text-[11px] text-slate-500">Penjualan lunas • Rp {{ number_format($tx->nominal, 0, ',', '.') }}</p>
+                                <p class="text-[11px] text-slate-500">Penjualan lunas • {{ \App\Helpers\FormatHelper::rupiahSingkat($tx->nominal) }}</p>
                             </div>
                         </div>
                         @empty
@@ -282,7 +282,7 @@
                         <div>
                             <div class="flex justify-between items-center text-[11px] mb-1">
                                 <span class="font-medium text-slate-600">{{ $item['label'] }}</span>
-                                <span class="font-bold text-slate-900">Rp {{ number_format($item['total'], 0, ',', '.') }}</span>
+                                <span class="font-bold text-slate-900">{{ \App\Helpers\FormatHelper::rupiahSingkat($item['total']) }}</span>
                             </div>
                             <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                                 <div class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: {{ $pct }}%"></div>
@@ -310,7 +310,7 @@
                                 <p class="text-[10px] text-blue-600 font-semibold">{{ $topEmp->klien_bulan_ini }} Klien Baru • {{ ucfirst($topEmp->jabatan) }}</p>
                             </div>
                         </div>
-                        <span class="font-extrabold text-slate-900 shrink-0 ml-2">Rp {{ number_format($topEmp->insentif_bulan_ini, 0, ',', '.') }}</span>
+                        <span class="font-extrabold text-slate-900 shrink-0 ml-2">{{ \App\Helpers\FormatHelper::rupiahSingkat($topEmp->insentif_bulan_ini) }}</span>
                     </div>
                     @empty
                     <div class="text-center py-4 text-slate-400">
