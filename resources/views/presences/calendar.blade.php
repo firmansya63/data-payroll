@@ -20,6 +20,10 @@
         </div>
         <a href="{{ route('presences.bulk') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/25"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Harian</a>
       </div>
+        <div class="flex items-center gap-2">
+          <a href="{{ route('presences.scan') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-600"><i class="fa-solid fa-qrcode" aria-hidden="true"></i> Scan QR Absen</a>
+          <a href="{{ route('presences.bulk') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/25"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Harian</a>
+        </div>
     </div>
 
     <form method="GET" class="vch-in mb-3 space-y-2 rounded-3xl bg-white/80 p-3 ring-1 ring-white/70 shadow-[0_10px_30px_-18px_rgba(37,99,235,.45)] backdrop-blur-xl md:p-4" style="animation-delay:.05s">

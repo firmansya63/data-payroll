@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function(){
     Route::resource("employees", EmployeeController::class);
     Route::get("presences/calendar", [PresenceController::class,"calendar"])->name("presences.calendar");
     Route::get("presences", function (\Illuminate\Http\Request $r) { return redirect()->route("presences.calendar", $r->only("bulan","tahun","employee_id")); })->name("presences.index");
+    Route::get("presences/scan", [PresenceController::class,"scan"])->name("presences.scan");
+    Route::post("presences/scan-store", [PresenceController::class,"scanStore"])->name("presences.scanStore");
+    Route::get("employees/{employee}/qrcode", [PresenceController::class,"qrcodeCard"])->name("employees.qrcode");
+
     Route::resource("presences", PresenceController::class)->only(["create","store","destroy"]);
     Route::get("presences-bulk", [PresenceController::class,"bulk"])->name("presences.bulk");
     Route::post("presences-bulk", [PresenceController::class,"bulkStore"])->name("presences.bulkStore");
