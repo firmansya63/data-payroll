@@ -23,7 +23,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $remember)) {
             $r->session()->regenerate();
-            return redirect()->intended(route('dashboard'))->with('ok', 'Selamat datang, '.Auth::user()->name);
+            $destination = Auth::user()->isAttendanceOnly()
+                ? route('presences.scan')
+                : route('dashboard');
+
+            return Auth::user()->isAttendanceOnly()
+                ? redirect()->route('presences.scan')->with('ok', 'Selamat datang, '.Auth::user()->name)
+                : redirect()->intended($destination)->with('ok', 'Selamat datang, '.Auth::user()->name);
         }
 
         return back()->withErrors(['email' => 'Email atau password salah.'])->onlyInput('email');

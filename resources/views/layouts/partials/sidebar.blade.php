@@ -66,6 +66,7 @@
             'label' => 'Pengaturan',
             'items' => [
                 ['label' => 'Profil Perusahaan', 'icon' => 'cog', 'route' => 'settings.company.index', 'active' => ['settings.*']],
+                ['label' => 'Manajemen User', 'icon' => 'users', 'route' => 'users.index', 'active' => ['users.*']],
             ],
         ],
     ];

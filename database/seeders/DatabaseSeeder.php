@@ -16,7 +16,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // cast password=hashed -> assign plain (jangan Hash::make double-hash)
-        User::firstOrCreate(['email'=>'admin@datanet.net'], ['name'=>'Admin','password'=>'password']);
+        User::firstOrCreate(
+            ['email'=>'admin@datanet.net'],
+            ['name'=>'Admin', 'password'=>'password', 'role'=>'admin']
+        );
+
+        $this->call(AttendanceUserSeeder::class);
 
         $resellers = collect([
             ['nama'=>'Kios Cell Berkah','no_hp'=>'081234567801','alamat'=>'Jl. Raya Timur - Kios 01'],

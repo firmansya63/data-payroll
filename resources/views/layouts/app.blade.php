@@ -33,24 +33,44 @@
     </style>
 </head>
 <body class="bg-[#EEF4FB] text-slate-800 antialiased min-h-screen">
-    <!-- Sidebar Overlay Mobile -->
-    <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity"></div>
+    @php($attendanceOnly = auth()->check() && auth()->user()->isAttendanceOnly())
 
-    <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        @include('layouts.partials.sidebar')
+    @if($attendanceOnly)
+        <header class="flex min-h-16 items-center justify-between border-b border-emerald-100 bg-white px-4 shadow-sm">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-emerald-600">Mode Perangkat</p>
+                <h1 class="text-sm font-extrabold text-slate-800">Scanner Absensi</h1>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-rose-50 hover:text-rose-600">
+                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+            </form>
+        </header>
+        <main class="mx-auto w-full max-w-2xl p-4 sm:p-6">
+            @yield('content')
+        </main>
+    @else
+        <!-- Sidebar Overlay Mobile -->
+        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-30 hidden lg:hidden transition-opacity"></div>
 
-        <!-- Main Content Wrapper -->
-        <div class="flex-1 flex flex-col min-w-0">
-            <!-- Topbar Header -->
-            @include('layouts.partials.topbar')
+        <div class="flex min-h-screen">
+            <!-- Sidebar -->
+            @include('layouts.partials.sidebar')
 
-            <!-- Main Page Content -->
-            <main class="flex-1 p-3.5 sm:p-5 lg:p-8 max-w-[1600px] w-full mx-auto">
-                @yield('content')
-            </main>
+            <!-- Main Content Wrapper -->
+            <div class="flex-1 flex flex-col min-w-0">
+                <!-- Topbar Header -->
+                @include('layouts.partials.topbar')
+
+                <!-- Main Page Content -->
+                <main class="flex-1 p-3.5 sm:p-5 lg:p-8 max-w-[1600px] w-full mx-auto">
+                    @yield('content')
+                </main>
+            </div>
         </div>
-    </div>
+    @endif
     <script>
     (function() {
         const sb = document.getElementById('sidebar');

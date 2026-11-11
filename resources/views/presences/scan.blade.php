@@ -26,11 +26,8 @@
             </div>
         </div>
 
-        <div class="mt-8 grid grid-cols-2 gap-4">
-            <a href="{{ route('presences.calendar') }}" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-slate-100 text-slate-600 font-semibold hover:bg-slate-200 transition">
-                <i class="fa-solid fa-arrow-left"></i> Kembali
-            </a>
-            <button onclick="window.location.reload()" class="flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
+        <div class="mt-8">
+            <button onclick="window.location.reload()" class="flex w-full items-center justify-center gap-2 py-3 px-4 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-600/20">
                 <i class="fa-solid fa-sync"></i> Refresh Kamera
             </button>
         </div>

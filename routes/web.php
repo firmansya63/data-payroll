@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanySettingController;
 use App\Http\Controllers\ManualNotaController;
 use App\Http\Controllers\SignatureController;
+use App\Http\Controllers\UserController;
 
 Route::middleware('guest')->group(function(){
     Route::get('/login', [AuthController::class,'showLogin'])->name('login');
@@ -21,7 +22,12 @@ Route::middleware('guest')->group(function(){
 });
 Route::post('/logout', [AuthController::class,'logout'])->middleware('auth')->name('logout');
 
-Route::middleware('auth')->group(function(){
+Route::middleware(['auth', 'role:admin,attendance'])->group(function () {
+    Route::get("presences/scan", [PresenceController::class,"scan"])->name("presences.scan");
+    Route::post("presences/scan-store", [PresenceController::class,"scanStore"])->name("presences.scanStore");
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function(){
     Route::get("/", [DashboardController::class,"index"])->name("dashboard");
     Route::resource("resellers", ResellerController::class);
     Route::get("transactions/rekap", [VoucherTransactionController::class,"rekap"])->name("transactions.rekap");
@@ -32,8 +38,6 @@ Route::middleware('auth')->group(function(){
     Route::resource("employees", EmployeeController::class);
     Route::get("presences/calendar", [PresenceController::class,"calendar"])->name("presences.calendar");
     Route::get("presences", function (\Illuminate\Http\Request $r) { return redirect()->route("presences.calendar", $r->only("bulan","tahun","employee_id")); })->name("presences.index");
-    Route::get("presences/scan", [PresenceController::class,"scan"])->name("presences.scan");
-    Route::post("presences/scan-store", [PresenceController::class,"scanStore"])->name("presences.scanStore");
     Route::get("employees/{employee}/qrcode", [PresenceController::class,"qrcodeCard"])->name("employees.qrcode");
 
     Route::resource("presences", PresenceController::class)->only(["create","store","destroy"]);
@@ -43,6 +47,7 @@ Route::middleware('auth')->group(function(){
     Route::resource("deductions", DeductionController::class);
     Route::resource("payrolls", PayrollController::class)->only(["index","create","store","show","destroy"]);
     Route::get("payrolls/{payroll}/slip", [PayrollController::class,"slip"])->name("payrolls.slip");
+    Route::resource('users', UserController::class)->except(['show']);
     Route::get("/profile", [ProfileController::class,"edit"])->name("profile.edit");
     Route::patch("/profile", [ProfileController::class,"update"])->name("profile.update");
     Route::patch("/profile/password", [ProfileController::class,"updatePassword"])->name("profile.password");
