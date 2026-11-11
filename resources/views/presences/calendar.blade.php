@@ -18,11 +18,10 @@
             <p class="text-[11px] text-white/70">Pantau kehadiran harian, rekap per karyawan, dan input bulk sekali klik.</p>
           </div>
         </div>
-        <a href="{{ route('presences.bulk') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/25"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Harian</a>
       </div>
-        <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2">
           <a href="{{ route('presences.scan') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:bg-emerald-600"><i class="fa-solid fa-qrcode" aria-hidden="true"></i> Scan QR Absen</a>
-          <a href="{{ route('presences.bulk') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/25"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Harian</a>
+          <a href="{{ route('presences.bulk', ['tanggal'=>now()->format('Y-m-d')]) }}" class="inline-flex items-center gap-1.5 rounded-xl bg-white/15 px-4 py-2 text-sm font-semibold text-white ring-1 ring-white/30 backdrop-blur transition hover:bg-white/25"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Hari Ini</a>
         </div>
     </div>
 
@@ -204,9 +203,6 @@
         </div>
       </div>
 
-      <div class="vch-in mt-3 flex flex-wrap gap-2" style="animation-delay:.3s">
-        <a href="{{ route('presences.bulk', ['tanggal'=>now()->format('Y-m-d')]) }}" class="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Bulk Hari Ini ({{ now()->translatedFormat('d M') }})</a>
-      </div>
     @endif
   </div>
 </div>
