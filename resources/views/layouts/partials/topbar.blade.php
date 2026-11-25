@@ -45,11 +45,6 @@
         </details>
         @endauth
 
-        <!-- CTA Utama (di kanan user) -->
-        <a href="{{ route('transactions.create') }}" class="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-600/30 transition">
-            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-            <span class="hidden sm:inline">+ Input Penjualan</span>
-            <span class="sm:hidden font-bold">Jual</span>
-        </a>
+        <!-- (Tombol Input Penjualan dihapus dari topbar) -->
     </div>
 </header>
