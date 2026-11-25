@@ -49,4 +49,24 @@ class ManualNota extends Model
         // global diskon already handled outside; this helper just sets subtotal
         $this->subtotal = $subtotal;
     }
+
+    /**
+     * Generate nomor nota otomatis berdasarkan nota yang sudah keluar,
+     * dengan awalan "dt" (mis. dt-0012).
+     */
+    public static function generateNoNota(): string
+    {
+        $max = 0;
+        foreach (static::pluck('no_nota') as $no) {
+            if (preg_match('/^dt-?(\d+)/i', (string) $no, $m)) {
+                $max = max($max, (int) $m[1]);
+            }
+        }
+        do {
+            $max++;
+            $candidate = 'dt-'.str_pad((string) $max, 4, '0', STR_PAD_LEFT);
+        } while (static::where('no_nota', $candidate)->exists());
+
+        return $candidate;
+    }
 }

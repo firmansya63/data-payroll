@@ -38,12 +38,15 @@ class ManualNotaController extends Controller
 
     public function create()
     {
-        return view('manual-notas.form', ['nota'=>null, 'items'=>[]]);
+        return view('manual-notas.form', ['nota'=>null, 'items'=>[], 'suggestedNo'=>ManualNota::generateNoNota()]);
     }
 
     public function store(Request $r)
     {
         $data = $this->validateData($r);
+        if (empty($data['no_nota'])) {
+            $data['no_nota'] = ManualNota::generateNoNota();
+        }
         $calc = $this->calculate($r);
         $nota = ManualNota::create(array_merge($data, [
             'subtotal' => $calc['subtotal'],
@@ -65,6 +68,9 @@ class ManualNotaController extends Controller
     public function update(Request $r, ManualNota $nota)
     {
         $data = $this->validateData($r, $nota->id);
+        if (empty($data['no_nota'])) {
+            $data['no_nota'] = ManualNota::generateNoNota();
+        }
         $calc = $this->calculate($r);
         $nota->update(array_merge($data, [
             'subtotal' => $calc['subtotal'],
@@ -107,7 +113,7 @@ class ManualNotaController extends Controller
     private function validateData(Request $r, $ignoreId = null)
     {
         $r->validate([
-            'no_nota' => ['required','string','max:50', Rule::unique('manual_notas','no_nota')->ignore($ignoreId)],
+            'no_nota' => ['nullable','string','max:50', Rule::unique('manual_notas','no_nota')->ignore($ignoreId)],
             'tanggal' => 'required|date',
             'jatuh_tempo' => 'nullable|date|after_or_equal:tanggal',
             'pelanggan_nama' => 'required|string|max:100',
@@ -135,7 +141,7 @@ class ManualNotaController extends Controller
             throw \Illuminate\Validation\ValidationException::withMessages(['dp_nominal'=>'DP nominal wajib diisi saat status DP']);
         }
         return [
-            'no_nota' => trim($r->no_nota),
+            'no_nota' => $r->no_nota ? trim($r->no_nota) : null,
             'tanggal' => $r->tanggal,
             'jatuh_tempo' => $r->jatuh_tempo ?: null,
             'pelanggan_nama' => trim($r->pelanggan_nama),
