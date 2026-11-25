@@ -19,33 +19,33 @@
             <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-2 right-2 ring-2 ring-white"></span>
         </button>
 
-        <!-- Status & Akun Pengguna -->
+        <!-- Akun Pengguna (dropdown) -->
         @auth
-        <div class="hidden sm:flex items-center gap-2 rounded-full bg-slate-50 border border-slate-200/70 pl-1.5 pr-3 py-1.5">
-            <span class="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-[11px] font-bold uppercase tracking-wide text-white">
-                {{ collect(preg_split('/\s+/', trim(auth()->user()->name)))->filter()->take(2)->map(fn($w)=>mb_strtoupper(mb_substr($w,0,1)))->implode('') ?: 'U' }}
-            </span>
-            <div class="min-w-0 leading-tight">
-                <p class="truncate text-xs font-bold text-slate-800">{{ auth()->user()->name }}</p>
-                <p class="flex items-center gap-1 text-[10px] text-slate-500">
-                    <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-                    Aktif
-                </p>
+        <details class="relative shrink-0">
+            <summary class="flex cursor-pointer list-none items-center gap-2 rounded-full bg-slate-50 border border-slate-200/70 pl-1.5 pr-3 py-1.5 text-slate-700 transition hover:bg-slate-100">
+                <span class="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-[11px] font-bold uppercase tracking-wide text-white">
+                    {{ collect(preg_split('/\s+/', trim(auth()->user()->name)))->filter()->take(2)->map(fn($w)=>mb_strtoupper(mb_substr($w,0,1)))->implode('') ?: 'U' }}
+                </span>
+                <span class="hidden sm:block truncate text-xs font-bold text-slate-800">{{ auth()->user()->name }}</span>
+                <svg class="h-3.5 w-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <div class="absolute right-0 mt-2 w-48 rounded-2xl bg-white p-2 shadow-xl ring-1 ring-slate-200/70 z-50">
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-blue-600">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Profil Saya
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-50">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                        Keluar
+                    </button>
+                </form>
             </div>
-        </div>
-        <form method="POST" action="{{ route('logout') }}" class="shrink-0">
-            @csrf
-            <button type="submit" title="Keluar"
-                    class="flex items-center gap-1.5 rounded-full bg-rose-50 border border-rose-200/70 px-3 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-100">
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-                <span class="hidden sm:inline">Keluar</span>
-            </button>
-        </form>
+        </details>
         @endauth
 
-        <!-- CTA Utama -->
+        <!-- CTA Utama (di kanan user) -->
         <a href="{{ route('transactions.create') }}" class="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-600/30 transition">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
             <span class="hidden sm:inline">+ Input Penjualan</span>
