@@ -19,6 +19,32 @@
             <span class="w-2 h-2 bg-rose-500 rounded-full absolute top-2 right-2 ring-2 ring-white"></span>
         </button>
 
+        <!-- Status & Akun Pengguna -->
+        @auth
+        <div class="hidden sm:flex items-center gap-2 rounded-full bg-slate-50 border border-slate-200/70 pl-1.5 pr-3 py-1.5">
+            <span class="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-[11px] font-bold uppercase tracking-wide text-white">
+                {{ collect(preg_split('/\s+/', trim(auth()->user()->name)))->filter()->take(2)->map(fn($w)=>mb_strtoupper(mb_substr($w,0,1)))->implode('') ?: 'U' }}
+            </span>
+            <div class="min-w-0 leading-tight">
+                <p class="truncate text-xs font-bold text-slate-800">{{ auth()->user()->name }}</p>
+                <p class="flex items-center gap-1 text-[10px] text-slate-500">
+                    <span class="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                    Aktif
+                </p>
+            </div>
+        </div>
+        <form method="POST" action="{{ route('logout') }}" class="shrink-0">
+            @csrf
+            <button type="submit" title="Keluar"
+                    class="flex items-center gap-1.5 rounded-full bg-rose-50 border border-rose-200/70 px-3 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-100">
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span class="hidden sm:inline">Keluar</span>
+            </button>
+        </form>
+        @endauth
+
         <!-- CTA Utama -->
         <a href="{{ route('transactions.create') }}" class="flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs shadow-md shadow-blue-600/30 transition">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
